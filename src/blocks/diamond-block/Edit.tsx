@@ -21,22 +21,20 @@ export default function Edit( props ) {
 		style: createCSSVariables( attributes ),
 	} );
 
-	const { children, ...innerBlocksProps } = useInnerBlocksProps(
-		{ className: 'wp-block-cno-diamond-button__content' },
-		{
-			allowedBlocks: [ 'core/button', 'core/paragraph', 'core/heading' ],
-			templateLock: false,
-		}
-	);
+	const { children, ...innerBlocksProps } = useInnerBlocksProps( {
+		className: 'wp-block-cno-diamond-button__content',
+	} );
 	return (
 		<Fragment>
 			<InspectorControls>
 				<PanelBody>
 					<Flex direction={ 'column' } gap={ 6 }>
-						<h2>Button Color</h2>
 						<FlexBlock>
+							<h2>Button Color</h2>
 							<ColorPalette
-								color={ btnColor }
+								clearable={ false }
+								disableCustomColors={ true }
+								value={ btnColor }
 								onChange={ ( color ) => {
 									const hsl = hexToHsl( color );
 									setAttributes( {
@@ -50,7 +48,9 @@ export default function Edit( props ) {
 						<FlexBlock>
 							<h2>Button Background Color</h2>
 							<ColorPalette
-								color={ btnBgColor }
+								clearable={ false }
+								disableCustomColors={ true }
+								value={ btnBgColor }
 								onChange={ ( color ) =>
 									setAttributes( { btnBgColor: color } )
 								}
@@ -59,7 +59,7 @@ export default function Edit( props ) {
 									{ name: 'White', color: '#ffffff' },
 								] }
 							/>
-							<p>
+							<p className="components-base-control__help">
 								Set the background color of the button to match
 								the color of the section to simulate
 								transparency.

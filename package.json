@@ -4,6 +4,7 @@
 	"description": "Example block scaffolded with Create Block tool.",
 	"author": "Choctaw Nation of Oklahoma",
 	"license": "GPL-3.0-or-later",
+	"prettier": "@wordpress/prettier-config",
 	"homepage": "https://github.com/choctaw-naton/cno-plugin-cno-blocks",
 	"main": "build/index.js",
 	"scripts": {

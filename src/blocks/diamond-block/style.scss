@@ -7,7 +7,8 @@
 		font-weight,
 		line-height,
 		text-transform,
-		color
+		color,
+		text-box
 	);
 
 	@each $value in $values {
@@ -22,7 +23,7 @@
 	align-items: center;
 	min-height: 50px;
 	height: auto;
-	width: 100%;
+	flex: 1 0 auto;
 	max-width: 990px;
 	background-color: hsl(
 		var(--btn-color--h) var(--btn-color--s) var(--btn-color--l)
@@ -33,18 +34,24 @@
 	transition: background-color var(--transition--standard);
 
 	&__content {
-		font-size: 1.25rem;
-		line-height: 40px;
+		font-size: var(--wp--preset--font-size--base, 1.35rem);
+		line-height: 1.2;
 		font-weight: 600;
 		text-align: left;
+		padding-block: 0.75rem;
+		text-box: trim-both cap alphabetic;
 		text-transform: uppercase;
 		color: white;
 		font-family: var(--wp--preset--font-family--headings);
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--wp--preset--spacing--xs, 0.25rem);
 
 		p {
-			margin: 0;
-
 			@include inherit-values;
+
+			margin: 0;
 
 			a {
 				@include inherit-values;
