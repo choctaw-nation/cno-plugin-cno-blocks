@@ -1,6 +1,6 @@
 {
-	"name": "choctaw-nation/choctaw-plugin-template",
-	"description": "A plugin template for the Choctaw nation",
+	"name": "choctaw-nation/cno-blocks",
+	"description": "Blocks for Choctaw Nation of Oklahoma website",
 	"type": "project",
 	"config": {
 		"allow-plugins": {
@@ -9,8 +9,8 @@
 		}
 	},
 	"scripts": {
-		"phpcs": "phpcs inc/ index.php",
-		"phpcbf": "phpcbf inc/ index.php"
+		"phpcs": "phpcs inc/ src/blocks/ cno-plugin-cno-blocks.php",
+		"phpcbf": "phpcbf inc/ src/blocks/ cno-plugin-cno-blocks.php"
 	},
 	"require-dev": {
 		"wp-coding-standards/wpcs": "*",

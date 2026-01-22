@@ -1,0 +1,34 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cno/location-picker",
+	"version": "0.1.0",
+	"title": "Location Picker",
+	"category": "widgets",
+	"icon": "location",
+	"description": "Select a location where a service is offered",
+	"attributes": {
+		"selectedLocations": { "type": "array", "default": [] }
+	},
+	"supports": {
+		"html": false,
+		"anchor": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true
+		},
+		"color": {
+			"text": true,
+			"background": true,
+			"link": true
+		},
+		"align": [ "wide", "full" ]
+	},
+	"editorScript": "file:./index.tsx",
+	"render": "file:./render.php"
+}
