@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: CNO Blocks
+ * Plugin Name: [Choctaw Nation of Oklahoma] Site Blocks
  * Plugin URI: https://github.com/choctaw-nation/cno-plugin-cno-blocks
  * Description: The blocks for the CNO Site
- * Version: 0.1.0
+ * Version: 1.0.0
  * Author: Choctaw Nation of Oklahoma
  * Author URI: https://www.choctawnation.com
  * Text Domain: cno
