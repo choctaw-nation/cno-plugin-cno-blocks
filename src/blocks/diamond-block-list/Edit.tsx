@@ -1,25 +1,39 @@
 import {
 	useBlockProps,
-	InspectorControls,
 	useInnerBlocksProps,
+	InspectorControls,
 } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import { PanelBody, ColorPalette } from '@wordpress/components';
-import { createCSSVariables } from '@shared/js/createDiamondButtonCSSVariables';
 import { hexToHsl } from '@shared/js/hexToHsl';
-import useSiteColors from '../_shared/hooks/useSiteColors';
+import { createCSSVariables } from '@shared/js/createDiamondButtonCSSVariables';
+import useSiteColors from '@shared/hooks/useSiteColors';
+import { parseWpCssValue } from '@shared/js/parseWpCssValue';
+
+const CHILD_BLOCK = 'cno/diamond-button-list-item';
 
 export default function Edit( props ) {
 	const { attributes, setAttributes } = props;
 	const { btnColor, btnBgColor } = attributes;
 	const colors = useSiteColors();
-	const blockProps = useBlockProps( {
-		style: createCSSVariables( attributes ),
+	const ListElement = attributes.listType === 'unordered' ? 'ul' : 'ol';
+	const blockProps = useBlockProps.save( {
+		style: {
+			listStyleType: 'none',
+			...createCSSVariables( attributes ),
+			display: 'flex',
+			flexDirection: 'column',
+			gap: attributes?.style?.spacing?.blockGap
+				? parseWpCssValue( attributes?.style?.spacing?.blockGap )
+				: undefined,
+		},
 	} );
 
-	const { children, ...innerBlocksProps } = useInnerBlocksProps( {
-		className: 'wp-block-cno-diamond-button__content',
+	const innerBlocksProps = useInnerBlocksProps( blockProps, {
+		allowedBlocks: [ CHILD_BLOCK ],
+		template: [ [ CHILD_BLOCK ], [ CHILD_BLOCK ] ],
 	} );
+
 	return (
 		<Fragment>
 			<InspectorControls>
@@ -70,10 +84,7 @@ export default function Edit( props ) {
 					</div>
 				</PanelBody>
 			</InspectorControls>
-			<div { ...blockProps }>
-				<div className="wp-block-cno-diamond-button__diamond" />
-				<div { ...innerBlocksProps }>{ children }</div>
-			</div>
+			<ListElement { ...innerBlocksProps } />
 		</Fragment>
 	);
 }

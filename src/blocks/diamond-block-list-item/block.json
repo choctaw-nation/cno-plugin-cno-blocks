@@ -1,0 +1,31 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cno/diamond-button-list-item",
+	"version": "1.0.0",
+	"title": "Diamond Button List Item",
+	"category": "design",
+	"icon": "button",
+	"description": "Display a stylized, diamond-shaped button",
+	"allowedBlocks": [
+		"core/paragraph",
+		"cno/modal-trigger",
+		"font-awesome/icon"
+	],
+	"parent": [ "cno/diamond-button-list" ],
+	"supports": {
+		"html": false,
+		"anchor": false,
+		"inserter": false,
+		"customClassName": false,
+		"color": {
+			"text": false,
+			"background": false
+		},
+		"spacing": {
+			"margin": true
+		}
+	},
+	"editorScript": "file:./index.tsx",
+	"style": "file:./style-index.css"
+}
