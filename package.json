@@ -1,39 +1,47 @@
 {
-	"name": "choctaw-plugin-template",
-	"version": "1.1.0",
-	"description": "Choctaw Plugin template",
-	"prettier": "@wordpress/prettier-config",
-	"browserslist": [
-		"extends @wordpress/browserslist-config"
-	],
+	"name": "cno-plugin-cno-blocks",
+	"version": "1.0.0",
+	"description": "Example block scaffolded with Create Block tool.",
 	"author": "Choctaw Nation of Oklahoma",
-	"files": [
-		"build",
-		"inc",
-		"README.md",
-		"LICENSE",
-		"CHANGELOG.md",
-		"index.php"
-	],
+	"license": "GPL-3.0-or-later",
+	"prettier": "@wordpress/prettier-config",
+	"homepage": "https://github.com/choctaw-naton/cno-plugin-cno-blocks",
+	"main": "build/index.js",
 	"scripts": {
-		"build": "wp-scripts build --blocks-manifest --webpack-copy-php",
-		"lint:css": "npx stylelint '**/*.scss' '**/*.css' --fix --allow-empty-input",
-		"lint:js": "npx eslint --fix",
+		"build": "wp-scripts build --blocks-manifest --webpack-copy-php --config webpack.config.mjs",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
-		"plugin-zip": "wp-scripts build && wp-scripts plugin-zip",
-		"start": "wp-scripts start --blocks-manifest --webpack-copy-php"
+		"plugin-zip": "wp-scripts build --blocks-manifest --webpack-copy-php && wp-scripts plugin-zip",
+		"start": "wp-scripts start --blocks-manifest --webpack-copy-php --config webpack.config.mjs"
 	},
+	"files": [
+		"inc",
+		"build",
+		"cno-plugin-cno-blocks.php",
+		"README.md"
+	],
 	"devDependencies": {
-		"@eslint/compat": "^2",
-		"@eslint/eslintrc": "^3",
-		"@wordpress/scripts": "^31",
+		"@eslint/compat": "^2.0.5",
+		"@wordpress/block-editor": "^15.18.0",
+		"@wordpress/blocks": "^15.18.0",
+		"@wordpress/components": "^33.0.0",
+		"@wordpress/data": "^10.45.0",
+		"@wordpress/dom-ready": "^4.45.0",
+		"@wordpress/editor": "^14.45.0",
+		"@wordpress/element": "^6.45.0",
+		"@wordpress/eslint-plugin": "^25.1.0",
+		"@wordpress/icons": "^13.0.0",
+		"@wordpress/interactivity": "^6.45.0",
+		"@wordpress/scripts": "^32.1.0",
 		"eslint": "^9",
-		"eslint-config-prettier": "^10",
-		"eslint-import-resolver-typescript": "^4",
-		"eslint-plugin-react-hooks": "^7",
-		"globals": "^16",
-		"stylelint": "^16",
-		"stylelint-config-standard-scss": "^16",
-		"stylelint-scss": "^6"
+		"eslint-config-prettier": "^10.1.8",
+		"globals": "^17.6.0",
+		"prettier": "npm:wp-prettier@^3.0.3",
+		"stylelint": "^17.10.0",
+		"stylelint-config-standard-scss": "^17.0.0",
+		"stylelint-scss": "^7.0.0",
+		"typescript": "^6.0.3"
 	}
 }

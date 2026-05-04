@@ -1,0 +1,72 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cno/address-block",
+	"version": "0.1.0",
+	"title": "CNO Address Block",
+	"category": "text",
+	"icon": "location",
+	"description": "Display address information with optional Google Maps link",
+	"example": {
+		"attributes": {
+			"streetAddress": "1802 Chukka Hina",
+			"city": "Durant",
+			"state": "Oklahoma",
+			"zip": "74701",
+			"enableGoogleMaps": true
+		}
+	},
+	"attributes": {
+		"streetAddress": {
+			"type": "string",
+			"default": ""
+		},
+		"address2": {
+			"type": "string"
+		},
+		"city": {
+			"type": "string",
+			"default": ""
+		},
+		"state": {
+			"type": "string",
+			"default": "Oklahoma"
+		},
+		"zip": {
+			"type": "string",
+			"default": ""
+		},
+		"enableGoogleMaps": {
+			"type": "boolean",
+			"default": true
+		},
+		"enableLine2": {
+			"type": "boolean",
+			"default": true
+		},
+		"fontFamily": {
+			"type": "string",
+			"default": "body"
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true
+		},
+		"color": {
+			"text": true,
+			"background": true,
+			"link": true
+		},
+		"align": [ "wide", "full" ]
+	},
+	"editorScript": "file:./index.tsx"
+}

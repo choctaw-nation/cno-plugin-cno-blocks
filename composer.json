@@ -1,7 +1,34 @@
 {
-	"name": "choctaw-nation/choctaw-plugin-template",
-	"description": "A plugin template for the Choctaw nation",
+	"name": "choctaw-nation/cno-blocks",
+	"description": "Blocks for Choctaw Nation of Oklahoma website",
 	"type": "project",
+	"version": "1.1.0",
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://wpackagist.org",
+			"only": [
+				"wpackagist-plugin/*",
+				"wpackagist-theme/*"
+			]
+		},
+		{
+			"type": "composer",
+			"url": "https://composer.advancedcustomfields.com"
+		}
+	],
+	"autoload-dev": {
+		"psr-4": {
+			"ChoctawNation\\Tests\\": "wp-content/themes/choctawnation/tests/"
+		}
+	},
+	"extra": {
+		"installer-paths": {
+			"vendor/{$name}/": [
+				"wpengine/advanced-custom-fields"
+			]
+		}
+	},
 	"config": {
 		"allow-plugins": {
 			"composer/installers": true,
@@ -9,8 +36,8 @@
 		}
 	},
 	"scripts": {
-		"phpcs": "phpcs inc/ index.php",
-		"phpcbf": "phpcbf inc/ index.php"
+		"phpcs": "phpcs inc/ src/blocks/ cno-plugin-cno-blocks.php",
+		"phpcbf": "phpcbf inc/ src/blocks/ cno-plugin-cno-blocks.php"
 	},
 	"require-dev": {
 		"wp-coding-standards/wpcs": "*",
