@@ -10,7 +10,7 @@
  * License: GPLv3 or later
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Requires PHP: 8.2
- * Requires at least: 6.7.0
+ * Requires at least: 6.8.0
  * Tested up to: 7.0.0
  *
  * @package ChoctawNation
