@@ -6,7 +6,7 @@ import { tabPanel as icon } from '@wordpress/icons';
 /**
  * Internal dependencies
  */
-import initBlock from '../utils/init-block';
+import initBlock from '@shared/init-block';
 import edit from './edit';
 import save from './save';
 import metadata from './block.json';
