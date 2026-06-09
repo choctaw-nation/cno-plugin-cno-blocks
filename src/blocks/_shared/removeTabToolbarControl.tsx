@@ -6,7 +6,6 @@ import {
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
 import { useDispatch, useSelect } from '@wordpress/data';
 
 /**
@@ -105,7 +104,7 @@ export default function RemoveTabToolbarControl( { tabsClientId } ) {
 				<ToolbarButton
 					className="components-toolbar__control"
 					onClick={ removeTab }
-					text={ __( 'Remove tab' ) }
+					text="Remove tab"
 					disabled={ isDisabled }
 				/>
 			</ToolbarGroup>

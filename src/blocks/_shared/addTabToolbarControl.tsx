@@ -1,7 +1,6 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
 import { createBlock } from '@wordpress/blocks';
 import {
 	BlockControls,
@@ -52,7 +51,7 @@ export default function AddTabToolbarControl( { tabsClientId } ) {
 		}
 
 		const newTabPanelBlock = createBlock( 'cno/tab-panel', {
-			label: __( 'Tab' ),
+			label: 'Tab',
 		} );
 		insertBlock( newTabPanelBlock, undefined, tabPanelsClientId );
 
@@ -69,7 +68,7 @@ export default function AddTabToolbarControl( { tabsClientId } ) {
 				<ToolbarButton
 					className="components-toolbar__control"
 					onClick={ addTab }
-					text={ __( 'Add tab' ) }
+					text="Add tab"
 				/>
 			</ToolbarGroup>
 		</BlockControls>
