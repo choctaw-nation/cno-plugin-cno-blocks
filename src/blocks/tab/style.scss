@@ -1,4 +1,4 @@
-.wp-block-tab {
+.wp-block-cno-tab {
 	box-sizing: border-box;
 	color: inherit;
 	display: block;
@@ -14,8 +14,8 @@
 	background: none;
 	appearance: none;
 	margin: 0;
-	padding: var(--wp--preset--spacing--20, 0.5em)
-		var(--wp--preset--spacing--30, 1em);
+	padding: var(--wp--preset--spacing--sm, 0.5rem)
+		var(--wp--preset--spacing--base, 1rem);
 
 	// Inherit typography from parent
 	font-size: inherit;

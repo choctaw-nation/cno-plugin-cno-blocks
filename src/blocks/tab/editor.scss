@@ -1,14 +1,14 @@
-.wp-block-tab {
+.wp-block-cno-tab {
 	&.is-selected {
 		outline-offset: 2px;
 	}
 }
 
-.block-editor-block-preview__live-content:has(.wp-block-tab) {
+.block-editor-block-preview__live-content:has(.wp-block-cno-tab) {
 	flex-basis: inherit !important;
 	flex-grow: inherit !important;
 
-	.wp-block-tab {
+	.wp-block-cno-tab {
 		flex-basis: 100% !important;
 	}
 }
