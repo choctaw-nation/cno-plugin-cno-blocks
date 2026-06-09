@@ -38,7 +38,7 @@
 		"editor.useTabStops": true,
 		"prettier.useTabs": false
 	},
-	"cSpell.words": [ "alignfull", "featuredmedia" ],
+	"cSpell.words": [ "alignfull", "choctawnation", "featuredmedia" ],
 	"css.format.spaceAroundSelectorSeparator": true,
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": "always",
