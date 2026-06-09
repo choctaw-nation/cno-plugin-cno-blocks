@@ -48,6 +48,7 @@ export default function Controls( { tabsClientId, blockIndex, isDefaultTab } ) {
 						isShownByDefault
 					>
 						<CheckboxControl
+							__nextHasNoMarginBottom
 							label="Default tab"
 							checked={ isDefaultTab }
 							onChange={ ( value ) => {

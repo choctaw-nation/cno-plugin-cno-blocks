@@ -40,6 +40,17 @@ class Plugin_Loader {
 		add_action( 'enqueue_block_editor_assets', array( $this, 'add_editor_scripts' ) );
 		$rest_router = new Rest_Router();
 		add_action( 'rest_api_init', array( $rest_router, 'register_routes' ) );
+		$this->handle_tabs_blocks();
+	}
+
+	/**
+	 * Handle Tabs blocks context
+	 *
+	 * @return void
+	 */
+	private function handle_tabs_blocks() {
+		$tabs_handler = new CNO_Tabs_Handler();
+		add_filter( 'render_block_context', array( $tabs_handler, 'block_cno_tabs_provide_context' ), 10, 2 );
 	}
 
 	/**

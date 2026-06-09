@@ -44,6 +44,7 @@
 		"classmap",
 		"featuredmedia",
 		"IAPI",
+		"innerblocks",
 		"kses"
 	],
 	"css.format.spaceAroundSelectorSeparator": true,
