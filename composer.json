@@ -3,6 +3,11 @@
 	"description": "Blocks for Choctaw Nation of Oklahoma website",
 	"type": "project",
 	"version": "2.0.0",
+	"autoload": {
+		"classmap": [
+			"inc/"
+		]
+	},
 	"repositories": [
 		{
 			"type": "composer",

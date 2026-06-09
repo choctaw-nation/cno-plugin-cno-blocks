@@ -37,9 +37,9 @@ const addEditorEntry = ( webpackConfig ) => {
 
 			return {
 				...entries,
-				upcomingEventsQueryVariation: path.resolve(
+				'classic/insertModalBlock': path.resolve(
 					__dirname,
-					'./src/editor/upcomingEventsQueryVariation.ts'
+					'./src/editor/insertModalBlock.ts'
 				),
 			};
 		},

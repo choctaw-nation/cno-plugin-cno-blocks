@@ -3,7 +3,7 @@
  * Plugin Loader
  *
  * @package ChoctawNation
- * @subpackage PluginStarter
+ * @subpackage CNO_Blocks
  */
 
 namespace ChoctawNation\CNO_Blocks;
@@ -18,13 +18,28 @@ class Plugin_Loader {
 	private string $dir_path;
 
 	/**
+	 * The directory URL of the plugin
+	 *
+	 * @var string $dir_url
+	 */
+	private string $dir_url;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $dir_path The directory path of the plugin
+	 * @param string $dir_url  The directory URL of the plugin
 	 */
-	public function __construct( string $dir_path ) {
+	public function __construct( string $dir_path, string $dir_url ) {
 		$this->dir_path = $dir_path;
+		$this->dir_url  = $dir_url;
+	}
+
+	public function load_plugin() {
 		add_action( 'init', array( $this, 'register_blocks' ) );
+		add_action( 'enqueue_block_editor_assets', array( $this, 'add_editor_scripts' ) );
+		$rest_router = new Rest_Router();
+		add_action( 'rest_api_init', array( $rest_router, 'register_routes' ) );
 	}
 
 	/**
@@ -80,6 +95,23 @@ class Plugin_Loader {
 		$manifest_data = require $this->dir_path . 'build/blocks-manifest.php';
 		foreach ( array_keys( $manifest_data ) as $block_type ) {
 			register_block_type( $blocks_path . "/{$block_type}" );
+		}
+	}
+
+	/**
+	 * Load Script to handle Modal Block insertion
+	 */
+	public function add_editor_scripts() {
+		$asset_file = $this->dir_path . 'build/classic/insertModalBlock.ts.asset.php';
+		if ( file_exists( $asset_file ) ) {
+			$asset = require $asset_file;
+			wp_enqueue_script(
+				'insert-modal-block-editor-script',
+				$this->dir_url . 'build/classic/insertModalBlock.ts.js',
+				$asset['dependencies'],
+				$asset['version'],
+				array( 'strategy' => 'defer' )
+			);
 		}
 	}
 }

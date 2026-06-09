@@ -23,8 +23,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-require_once __DIR__ . '/inc/class-plugin-loader.php';
-$plugin_loader = new Plugin_Loader( plugin_dir_path( __FILE__ ) );
+$autoloader = __DIR__ . '/vendor/autoload.php';
+
+if ( ! file_exists( $autoloader ) ) {
+	add_action(
+		'admin_notices',
+		static function () {
+			echo '<div class="notice notice-error"><p>CNO Site Blocks Plugin is missing required dependencies. Please run Composer install or deploy the plugin with its vendor directory included.</p></div>';
+		}
+	);
+	return;
+}
+require_once $autoloader;
+$plugin_loader = new Plugin_Loader( plugin_dir_path( __FILE__ ), plugin_dir_url( __FILE__ ) );
 
 register_activation_hook( __FILE__, array( $plugin_loader, 'activate' ) );
 register_deactivation_hook( __FILE__, array( $plugin_loader, 'deactivate' ) );
+add_action( 'plugins_loaded', array( $plugin_loader, 'load_plugin' ) );
