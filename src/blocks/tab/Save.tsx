@@ -3,7 +3,7 @@
  */
 import { useBlockProps } from '@wordpress/block-editor';
 
-export default function save() {
+export default function Save() {
 	const blockProps = useBlockProps.save( {
 		type: 'button',
 		role: 'tab',

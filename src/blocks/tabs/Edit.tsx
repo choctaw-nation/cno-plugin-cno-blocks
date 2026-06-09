@@ -13,7 +13,7 @@ import { useMemo } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import Controls from './controls';
+import Controls from './Controls';
 import useTabListSync from './use-tab-list-sync';
 
 const EMPTY_ARRAY = [];

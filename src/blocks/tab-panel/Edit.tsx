@@ -13,7 +13,7 @@ import { useMemo, useRef, useEffect } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import Controls from './controls';
+import Controls from './Controls';
 
 const TEMPLATE = [
 	[
