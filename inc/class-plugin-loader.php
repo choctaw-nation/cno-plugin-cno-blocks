@@ -75,26 +75,6 @@ class Plugin_Loader {
 		 */
 		if ( function_exists( 'wp_register_block_types_from_metadata_collection' ) ) {
 			wp_register_block_types_from_metadata_collection( $blocks_path, $this->dir_path . 'build/blocks-manifest.php' );
-			return;
-		}
-
-		/**
-		 * Registers the block(s) metadata from the `blocks-manifest.php` file.
-		 * Added to WordPress 6.7 to improve the performance of block type registration.
-		 *
-		 * @see https://make.wordpress.org/core/2024/10/17/new-block-type-registration-apis-to-improve-performance-in-wordpress-6-7/
-		 */
-		if ( function_exists( 'wp_register_block_metadata_collection' ) ) {
-			wp_register_block_metadata_collection( $blocks_path, $this->dir_path . 'build/blocks-manifest.php' );
-		}
-		/**
-		 * Registers the block type(s) in the `blocks-manifest.php` file.
-		 *
-		 * @see https://developer.wordpress.org/reference/functions/register_block_type/
-		 */
-		$manifest_data = require $this->dir_path . 'build/blocks-manifest.php';
-		foreach ( array_keys( $manifest_data ) as $block_type ) {
-			register_block_type( $blocks_path . "/{$block_type}" );
 		}
 	}
 
@@ -102,12 +82,12 @@ class Plugin_Loader {
 	 * Load Script to handle Modal Block insertion
 	 */
 	public function add_editor_scripts() {
-		$asset_file = $this->dir_path . 'build/classic/insertModalBlock.ts.asset.php';
+		$asset_file = $this->dir_path . 'build/editor/insertModalBlock.asset.php';
 		if ( file_exists( $asset_file ) ) {
 			$asset = require $asset_file;
 			wp_enqueue_script(
 				'insert-modal-block-editor-script',
-				$this->dir_url . 'build/classic/insertModalBlock.ts.js',
+				$this->dir_url . 'build/editor/insertModalBlock.js',
 				$asset['dependencies'],
 				$asset['version'],
 				array( 'strategy' => 'defer' )

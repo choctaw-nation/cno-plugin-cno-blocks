@@ -42,7 +42,9 @@
 		"alignfull",
 		"choctawnation",
 		"classmap",
-		"featuredmedia"
+		"featuredmedia",
+		"IAPI",
+		"kses"
 	],
 	"css.format.spaceAroundSelectorSeparator": true,
 	"editor.codeActionsOnSave": {

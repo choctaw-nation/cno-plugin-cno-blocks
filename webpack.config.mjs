@@ -37,7 +37,7 @@ const addEditorEntry = ( webpackConfig ) => {
 
 			return {
 				...entries,
-				'classic/insertModalBlock': path.resolve(
+				'editor/insertModalBlock': path.resolve(
 					__dirname,
 					'./src/editor/insertModalBlock.ts'
 				),
