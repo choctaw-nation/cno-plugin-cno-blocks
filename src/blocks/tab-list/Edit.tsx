@@ -11,8 +11,8 @@ import { useSelect } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import AddTabToolbarControl from '../tab-panel/add-tab-toolbar-control';
-import RemoveTabToolbarControl from '../tab-panel/remove-tab-toolbar-control';
+import AddTabToolbarControl from '../_shared/addTabToolbarControl';
+import RemoveTabToolbarControl from '../_shared/removeTabToolbarControl';
 import './editor.scss';
 
 const TAB_LIST_TEMPLATE = [ [ 'cno/tab' ], [ 'cno/tab' ] ];

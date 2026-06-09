@@ -7,13 +7,12 @@ import {
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
-import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import AddTabToolbarControl from '../tab-panel/add-tab-toolbar-control';
-import RemoveTabToolbarControl from '../tab-panel/remove-tab-toolbar-control';
+import AddTabToolbarControl from '@shared/addTabToolbarControl';
+import RemoveTabToolbarControl from '@shared/removeTabToolbarControl';
 
 /**
  * Initial template applied only when the block is first inserted (i.e. when
@@ -21,8 +20,8 @@ import RemoveTabToolbarControl from '../tab-panel/remove-tab-toolbar-control';
  * existing blocks that already have tab panels saved.
  */
 const TAB_PANELS_TEMPLATE = [
-	[ 'cno/tab-panel', { label: __( 'Tab' ) } ],
-	[ 'cno/tab-panel', { label: __( 'Tab' ) } ],
+	[ 'cno/tab-panel', { label: 'Tab' } ],
+	[ 'cno/tab-panel', { label: 'Tab' } ],
 ];
 
 export default function Edit( { clientId } ) {

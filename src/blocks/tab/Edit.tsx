@@ -6,7 +6,6 @@ import clsx from 'clsx';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
 	store as blockEditorStore,
@@ -130,7 +129,7 @@ function Edit( { context, clientId } ) {
 				<RichText
 					tagName="span"
 					withoutInteractiveFormatting
-					placeholder={ __( 'Tab title' ) }
+					placeholder="Tab title"
 					value={ label }
 					onChange={ handleLabelChange }
 				/>

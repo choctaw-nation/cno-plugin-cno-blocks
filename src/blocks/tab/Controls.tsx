@@ -6,8 +6,8 @@ import { BlockControls } from '@wordpress/block-editor';
 /**
  * Internal dependencies
  */
-import AddTabToolbarControl from '../tab-panel/add-tab-toolbar-control';
-import RemoveTabToolbarControl from '../tab-panel/remove-tab-toolbar-control';
+import AddTabToolbarControl from '../_shared/addTabToolbarControl';
+import RemoveTabToolbarControl from '../_shared/removeTabToolbarControl';
 
 export default function Controls( { tabsClientId } ) {
 	return (
