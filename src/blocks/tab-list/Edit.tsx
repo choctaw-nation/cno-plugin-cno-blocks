@@ -13,6 +13,7 @@ import { useSelect } from '@wordpress/data';
  */
 import AddTabToolbarControl from '../tab-panel/add-tab-toolbar-control';
 import RemoveTabToolbarControl from '../tab-panel/remove-tab-toolbar-control';
+import './editor.scss';
 
 const TAB_LIST_TEMPLATE = [ [ 'cno/tab' ], [ 'cno/tab' ] ];
 

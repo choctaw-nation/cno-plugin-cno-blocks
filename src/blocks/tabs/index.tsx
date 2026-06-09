@@ -1,22 +1,18 @@
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
 import { tabs as icon } from '@wordpress/icons';
+import { registerBlockType } from '@wordpress/blocks';
+import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
  */
-import initBlock from '@shared/init-block';
 import Edit from './Edit';
-import Save from './Save';
 import metadata from './block.json';
+import './style.scss';
 
-const { name } = metadata;
-
-export { metadata, name };
-
-export const settings = {
+registerBlockType( metadata.name, {
 	icon,
 	example: {
 		innerBlocks: [
@@ -39,19 +35,14 @@ export const settings = {
 					name: 'cno/tab-panel',
 					attributes: {
 						anchor: `tab-${ index }`,
-						label: sprintf(
-							/** translators: %s: tab index number */
-							__( 'Tab %s' ),
-							index
-						),
+						label: `Tab ${ index }`,
 					},
 					innerBlocks: [
 						{
 							name: 'core/paragraph',
 							attributes: {
-								content: __(
-									'In a village of La Mancha, the name of which I have no desire to call to mind, there lived not long since one of those gentlemen that keep a lance in the lance-rack, an old buckler, a lean hack, and a greyhound for coursing.'
-								),
+								content:
+									'In a village of La Mancha, the name of which I have no desire to call to mind, there lived not long since one of those gentlemen that keep a lance in the lance-rack, an old buckler, a lean hack, and a greyhound for coursing.',
 							},
 						},
 					],
@@ -60,7 +51,10 @@ export const settings = {
 		],
 	},
 	edit: Edit,
-	save: Save,
-};
+	save: () => {
+		const blockProps = useBlockProps.save();
+		const innerBlocksProps = useInnerBlocksProps.save( blockProps );
 
-export const init = () => initBlock( { name, metadata, settings } );
+		return <div { ...innerBlocksProps } />;
+	},
+} );

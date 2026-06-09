@@ -60,8 +60,8 @@
 		"cno/tabs-editorActiveTabIndex": "editorActiveTabIndex"
 	},
 	"usesContext": [ "cno/tabs-list", "cno/tabs-id" ],
-	"editorScript": "file:./index.js",
-	"editorStyle": "file:./index.css",
+	"editorScript": "file:./index.tsx",
 	"style": "file:./style-index.css",
+	"render": "file:./render.php",
 	"viewScriptModule": "file:./view.js"
 }

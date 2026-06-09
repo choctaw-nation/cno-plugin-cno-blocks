@@ -13,10 +13,9 @@
 	border: none;
 	background: none;
 	appearance: none;
-	-webkit-appearance: none;
-
 	margin: 0;
-	padding: var(--wp--preset--spacing--20, 0.5em) var(--wp--preset--spacing--30, 1em);
+	padding: var(--wp--preset--spacing--20, 0.5em)
+		var(--wp--preset--spacing--30, 1em);
 
 	// Inherit typography from parent
 	font-size: inherit;
@@ -31,7 +30,7 @@
 	&.is-active::before {
 		content: "";
 		position: absolute;
-		border-bottom: 2px solid currentColor;
+		border-bottom: 2px solid currentcolor;
 		pointer-events: none;
 		left: 0;
 		width: 100%;

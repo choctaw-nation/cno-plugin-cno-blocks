@@ -61,6 +61,7 @@
 			}
 		}
 	},
-	"editorScript": "file:./index.js",
-	"editorStyle": "file:./editor.css"
+	"editorScript": "file:./index.tsx",
+	"editorStyle": "file:./index.css",
+	"render": "file:./render.php"
 }

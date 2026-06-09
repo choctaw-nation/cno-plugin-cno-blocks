@@ -61,6 +61,6 @@
 			"style": true
 		}
 	},
-	"editorScript": "file:./index.js",
+	"editorScript": "file:./index.tsx",
 	"style": "file:./style-index.css"
 }

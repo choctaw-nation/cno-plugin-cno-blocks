@@ -50,6 +50,7 @@
 	"providesContext": {
 		"cno/tab-label": "label"
 	},
-	"editorScript": "file:./index.js",
-	"style": "file:./style-index.css"
+	"editorScript": "file:./index.tsx",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
 }

@@ -19,6 +19,7 @@ import { useMemo, useCallback } from '@wordpress/element';
  * Internal dependencies
  */
 import Controls from './Controls';
+import './editor.scss';
 
 const EMPTY_ARRAY = [];
 

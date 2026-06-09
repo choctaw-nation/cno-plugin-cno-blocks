@@ -18,7 +18,7 @@ import { useDispatch } from '@wordpress/data';
  */
 import AddTabToolbarControl from './add-tab-toolbar-control';
 import RemoveTabToolbarControl from './remove-tab-toolbar-control';
-import { useToolsPanelDropdownMenuProps } from '../utils/hooks';
+import { useToolsPanelDropdownMenuProps } from '@shared/hooks/useToolsPanelDropdownMenuProps';
 
 export default function Controls( { tabsClientId, blockIndex, isDefaultTab } ) {
 	const { updateBlockAttributes } = useDispatch( blockEditorStore );
