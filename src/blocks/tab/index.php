@@ -6,7 +6,7 @@
  */
 
 /**
- * Render callback for core/tab.
+ * Render callback for cno/tab.
  *
  * Injects the tab label and IAPI directives into the saved button HTML.
  * Per-item context (index, id, label) is provided by the parent tab-list
@@ -21,9 +21,9 @@
  * @return string Updated HTML.
  */
 function block_core_tab_render_callback( array $attributes, string $content, \WP_Block $block ): string {
-	$tab_index = $block->context['core/tab-index'] ?? 0;
-	$tab_id    = $block->context['core/tab-id'] ?? '';
-	$tab_label = $block->context['core/tab-label'] ?? '';
+	$tab_index = $block->context['cno/tab-index'] ?? 0;
+	$tab_id    = $block->context['cno/tab-id'] ?? '';
+	$tab_label = $block->context['cno/tab-label'] ?? '';
 
 	if ( empty( $tab_id ) ) {
 		$tab_id = 'tab-' . $tab_index;
@@ -55,7 +55,7 @@ function block_core_tab_render_callback( array $attributes, string $content, \WP
 }
 
 /**
- * Registers the `core/tab` block on the server.
+ * Registers the `cno/tab` block on the server.
  *
  * @since 7.0.0
  */

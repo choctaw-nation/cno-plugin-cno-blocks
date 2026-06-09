@@ -20,7 +20,7 @@ const EMPTY_ARRAY = [];
 
 /**
  * Only the two structural child blocks are specified here — without inner
- * block entries for core/tab-list or core/tab-panels.
+ * block entries for cno/tab-list or cno/tab-panels.
  *
  * If inner blocks were included in this template, `synchronizeBlocksWithTemplate`
  * (called whenever templateLock === 'all') would recurse into the containers and
@@ -30,7 +30,7 @@ const EMPTY_ARRAY = [];
  * Initial tab/panel creation is delegated to the tab-panels template in
  * tab-panels/edit.js (templateLock: false, applied only when empty).
  */
-const TABS_TEMPLATE = [ [ 'core/tab-list' ], [ 'core/tab-panels' ] ];
+const TABS_TEMPLATE = [ [ 'cno/tab-list' ], [ 'cno/tab-panels' ] ];
 
 function Edit( { clientId, attributes, setAttributes } ) {
 	const { anchor, activeTabIndex, editorActiveTabIndex } = attributes;
@@ -41,10 +41,10 @@ function Edit( { clientId, attributes, setAttributes } ) {
 			const innerBlocks = getBlocks( clientId );
 
 			const tabPanelBlocks = innerBlocks.find(
-				( block ) => block.name === 'core/tab-panels'
+				( block ) => block.name === 'cno/tab-panels'
 			);
 			const tabList = innerBlocks.find(
-				( block ) => block.name === 'core/tab-list'
+				( block ) => block.name === 'cno/tab-list'
 			);
 
 			return {
@@ -81,10 +81,10 @@ function Edit( { clientId, attributes, setAttributes } ) {
 		} ) );
 
 		return {
-			'core/tabs-list': tabList,
-			'core/tabs-id': anchor,
-			'core/tabs-activeTabIndex': activeTabIndex,
-			'core/tabs-editorActiveTabIndex': editorActiveTabIndex,
+			'cno/tabs-list': tabList,
+			'cno/tabs-id': anchor,
+			'cno/tabs-activeTabIndex': activeTabIndex,
+			'cno/tabs-editorActiveTabIndex': editorActiveTabIndex,
 		};
 	}, [ tabPanels, anchor, activeTabIndex, editorActiveTabIndex ] );
 

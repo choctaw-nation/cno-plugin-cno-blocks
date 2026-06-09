@@ -6,7 +6,7 @@
  */
 
 /**
- * Render callback for core/tab-panel.
+ * Render callback for cno/tab-panel.
  *
  * @since 7.0.0
  *
@@ -17,7 +17,7 @@
  * @return string Updated HTML.
  */
 function block_core_tab_panel_render( array $attributes, string $content, \WP_Block $block ): string {
-	$tabs_id = $block->context['core/tabs-id'] ?? '';
+	$tabs_id = $block->context['cno/tabs-id'] ?? '';
 
 	static $tab_counters = array();
 
@@ -46,7 +46,7 @@ function block_core_tab_panel_render( array $attributes, string $content, \WP_Bl
 	 */
 	$tag_processor->set_attribute(
 		'data-wp-interactive',
-		'core/tabs/private'
+		'cno/tabs/private'
 	);
 	$tag_processor->set_attribute(
 		'data-wp-context',
@@ -71,7 +71,7 @@ function block_core_tab_panel_render( array $attributes, string $content, \WP_Bl
 }
 
 /**
- * Registers the `core/tab-panel` block on the server.
+ * Registers the `cno/tab-panel` block on the server.
  *
  * @hook init
  *

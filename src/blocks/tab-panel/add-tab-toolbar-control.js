@@ -12,7 +12,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 
 /**
  * "Add tab" button in the block toolbar for the tabs block.
- * Inserts a new core/tab-panel into the tab-panels and a new core/tab
+ * Inserts a new cno/tab-panel into the tab-panels and a new cno/tab
  * into the tab-list, keeping both in sync.
  *
  * @param {Object} props
@@ -33,10 +33,10 @@ export default function AddTabToolbarControl( { tabsClientId } ) {
 			const { getBlocks } = select( blockEditorStore );
 			const innerBlocks = getBlocks( tabsClientId );
 			const tabPanels = innerBlocks.find(
-				( block ) => block.name === 'core/tab-panels'
+				( block ) => block.name === 'cno/tab-panels'
 			);
 			const tabList = innerBlocks.find(
-				( block ) => block.name === 'core/tab-list'
+				( block ) => block.name === 'cno/tab-list'
 			);
 			return {
 				tabPanelsClientId: tabPanels?.clientId || null,
@@ -51,14 +51,14 @@ export default function AddTabToolbarControl( { tabsClientId } ) {
 			return;
 		}
 
-		const newTabPanelBlock = createBlock( 'core/tab-panel', {
+		const newTabPanelBlock = createBlock( 'cno/tab-panel', {
 			label: __( 'Tab' ),
 		} );
 		insertBlock( newTabPanelBlock, undefined, tabPanelsClientId );
 
 		// Insert a corresponding tab into the tab-list.
 		if ( tabsListClientId ) {
-			const newTabBlock = createBlock( 'core/tab', {} );
+			const newTabBlock = createBlock( 'cno/tab', {} );
 			insertBlock( newTabBlock, undefined, tabsListClientId );
 		}
 	};

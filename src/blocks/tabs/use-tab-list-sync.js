@@ -18,10 +18,10 @@ import { useEffect, useRef } from '@wordpress/element';
  * which inserts both at once), no action is needed and the effect exits early.
  *
  * @param {Object}      props
- * @param {Array}       props.tabs              Raw core/tab block objects.
- * @param {Array}       props.tabPanels         Raw core/tab-panel block objects.
- * @param {string|null} props.tabPanelsClientId Client ID of the core/tab-panels block.
- * @param {string|null} props.tabsListClientId  Client ID of the core/tab-list block.
+ * @param {Array}       props.tabs              Raw cno/tab block objects.
+ * @param {Array}       props.tabPanels         Raw cno/tab-panel block objects.
+ * @param {string|null} props.tabPanelsClientId Client ID of the cno/tab-panels block.
+ * @param {string|null} props.tabsListClientId  Client ID of the cno/tab-list block.
  */
 export default function useTabListSync( {
 	tabPanels,
@@ -169,7 +169,7 @@ export default function useTabListSync( {
 					! prevTabPanelIds.has( tabPanel.clientId )
 						? {
 								tabPanelIndex,
-								block: createBlock( 'core/tab', {} ),
+								block: createBlock( 'cno/tab', {} ),
 						  }
 						: null
 				)
@@ -204,7 +204,7 @@ export default function useTabListSync( {
 						'';
 					return {
 						tabIndex,
-						block: createBlock( 'core/tab-panel', { label } ),
+						block: createBlock( 'cno/tab-panel', { label } ),
 					};
 				} )
 				.filter( Boolean );

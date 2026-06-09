@@ -11,8 +11,8 @@ import { useDispatch, useSelect } from '@wordpress/data';
 
 /**
  * "Remove Tab" button in the block toolbar for the tabs block.
- * Removes the currently active core/tab-panel and its corresponding
- * core/tab, keeping both in sync.
+ * Removes the currently active cno/tab-panel and its corresponding
+ * cno/tab, keeping both in sync.
  *
  * @param {Object} props
  * @param {string} props.tabsClientId The client ID of the parent tabs block.
@@ -50,10 +50,10 @@ export default function RemoveTabToolbarControl( { tabsClientId } ) {
 				0;
 			const innerBlocks = getBlocks( tabsClientId );
 			const tabPanels = innerBlocks.find(
-				( block ) => block.name === 'core/tab-panels'
+				( block ) => block.name === 'cno/tab-panels'
 			);
 			const tabList = innerBlocks.find(
-				( block ) => block.name === 'core/tab-list'
+				( block ) => block.name === 'cno/tab-list'
 			);
 			const tabPanelBlocks = tabPanels?.innerBlocks || [];
 			const tabs = tabList?.innerBlocks || [];

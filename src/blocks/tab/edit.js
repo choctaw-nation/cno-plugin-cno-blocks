@@ -23,9 +23,9 @@ import Controls from './controls';
 const EMPTY_ARRAY = [];
 
 function Edit( { context, clientId } ) {
-	const tabsList = context[ 'core/tabs-list' ] || EMPTY_ARRAY;
-	const activeTabIndex = context[ 'core/tabs-activeTabIndex' ];
-	const editorActiveTabIndex = context[ 'core/tabs-editorActiveTabIndex' ];
+	const tabsList = context[ 'cno/tabs-list' ] || EMPTY_ARRAY;
+	const activeTabIndex = context[ 'cno/tabs-activeTabIndex' ];
+	const editorActiveTabIndex = context[ 'cno/tabs-editorActiveTabIndex' ];
 
 	const effectiveActiveIndex = useMemo( () => {
 		return editorActiveTabIndex ?? activeTabIndex;

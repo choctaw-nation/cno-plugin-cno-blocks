@@ -6,7 +6,7 @@
  */
 
 /**
- * Render callback for core/tab-list.
+ * Render callback for cno/tab-list.
  *
  * Re-renders each tab inner block with per-item context (index, id,
  * label) injected from the tabs-list, so the tab render callback
@@ -21,7 +21,7 @@
  * @return string Updated HTML.
  */
 function block_core_tab_list_render_callback( array $attributes, string $content, \WP_Block $block ): string {
-	$tabs_list = $block->context['core/tabs-list'] ?? array();
+	$tabs_list = $block->context['cno/tabs-list'] ?? array();
 
 	if ( empty( $tabs_list ) ) {
 		return $content;
@@ -33,7 +33,7 @@ function block_core_tab_list_render_callback( array $attributes, string $content
 	$tab_position = 0;
 
 	foreach ( $block->parsed_block['innerBlocks'] ?? array() as $parsed_tab ) {
-		if ( 'core/tab' !== ( $parsed_tab['blockName'] ?? '' ) ) {
+		if ( 'cno/tab' !== ( $parsed_tab['blockName'] ?? '' ) ) {
 			continue;
 		}
 
@@ -49,9 +49,9 @@ function block_core_tab_list_render_callback( array $attributes, string $content
 		$item_context = array_merge(
 			$block->context,
 			array(
-				'core/tab-index' => $tab_index,
-				'core/tab-id'    => $tab['id'] ?? '',
-				'core/tab-label' => $tab['label'] ?? '',
+				'cno/tab-index' => $tab_index,
+				'cno/tab-id'    => $tab['id'] ?? '',
+				'cno/tab-label' => $tab['label'] ?? '',
 			)
 		);
 
@@ -65,7 +65,7 @@ function block_core_tab_list_render_callback( array $attributes, string $content
 }
 
 /**
- * Registers the `core/tab-list` block on the server.
+ * Registers the `cno/tab-list` block on the server.
  *
  * @since 7.0.0
  */

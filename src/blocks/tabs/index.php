@@ -20,10 +20,10 @@ function block_core_tabs_generate_tabs_list( array $innerblocks = array(), strin
 
 	// Find tab-panel block
 	foreach ( $innerblocks as $inner_block ) {
-		if ( 'core/tab-panels' === ( $inner_block['blockName'] ?? '' ) ) {
+		if ( 'cno/tab-panels' === ( $inner_block['blockName'] ?? '' ) ) {
 			$tab_index = 0;
 			foreach ( $inner_block['innerBlocks'] ?? array() as $tab_block ) {
-				if ( 'core/tab-panel' === ( $tab_block['blockName'] ?? '' ) ) {
+				if ( 'cno/tab-panel' === ( $tab_block['blockName'] ?? '' ) ) {
 					$attrs     = $tab_block['attrs'] ?? array();
 					$tab_label = $attrs['label'] ?? '';
 
@@ -49,9 +49,9 @@ function block_core_tabs_generate_tabs_list( array $innerblocks = array(), strin
 }
 
 /**
- * Filter to provide tabs list context to core/tabs and core/tab-list blocks.
+ * Filter to provide tabs list context to cno/tabs and cno/tab-list blocks.
  * It is more performant to do this here, once, rather than in the tabs render and tabs context filters.
- * In this way core/tabs is both a provider and a consumer of the core/tabs-list context.
+ * In this way cno/tabs is both a provider and a consumer of the cno/tabs-list context.
  *
  * @since 7.0.0
  *
@@ -61,14 +61,14 @@ function block_core_tabs_generate_tabs_list( array $innerblocks = array(), strin
  * @return array Modified context.
  */
 function block_core_tabs_provide_context( array $context, array $parsed_block ): array {
-	if ( 'core/tabs' === $parsed_block['blockName'] ) {
+	if ( 'cno/tabs' === $parsed_block['blockName'] ) {
 		// Generate a unique ID for the tabs instance first, so it can be used
 		// to derive stable tab IDs. Used for 3rd party extensibility to identify
 		// the tabs instance.
-		$tabs_id                   = $parsed_block['attrs']['anchor'] ?? wp_unique_id( 'tabs_' );
-		$tabs_list                 = block_core_tabs_generate_tabs_list( $parsed_block['innerBlocks'] ?? array(), $tabs_id );
-		$context['core/tabs-list'] = $tabs_list;
-		$context['core/tabs-id']   = $tabs_id;
+		$tabs_id                  = $parsed_block['attrs']['anchor'] ?? wp_unique_id( 'tabs_' );
+		$tabs_list                = block_core_tabs_generate_tabs_list( $parsed_block['innerBlocks'] ?? array(), $tabs_id );
+		$context['cno/tabs-list'] = $tabs_list;
+		$context['cno/tabs-id']   = $tabs_id;
 	}
 
 	return $context;
@@ -76,7 +76,7 @@ function block_core_tabs_provide_context( array $context, array $parsed_block ):
 add_filter( 'render_block_context', 'block_core_tabs_provide_context', 10, 2 );
 
 /**
- * Render callback for core/tabs.
+ * Render callback for cno/tabs.
  *
  * @since 7.0.0
  *
@@ -88,8 +88,8 @@ add_filter( 'render_block_context', 'block_core_tabs_provide_context', 10, 2 );
  */
 function block_core_tabs_render_block_callback( array $attributes, string $content, \WP_Block $block ): string {
 	$active_tab_index = $attributes['activeTabIndex'] ?? 0;
-	$tabs_list        = $block->context['core/tabs-list'] ?? array();
-	$tabs_id          = $block->context['core/tabs-id'] ?? null;
+	$tabs_list        = $block->context['cno/tabs-list'] ?? array();
+	$tabs_id          = $block->context['cno/tabs-id'] ?? null;
 
 	if ( empty( $tabs_id ) ) {
 		// If malformed tabs, return early to avoid errors.
@@ -101,17 +101,17 @@ function block_core_tabs_render_block_callback( array $attributes, string $conte
 	$tag_processor = new WP_HTML_Tag_Processor( $content );
 
 	$tag_processor->next_tag( array( 'class_name' => 'wp-block-tabs' ) );
-	$tag_processor->set_attribute( 'data-wp-interactive', 'core/tabs/private' );
+	$tag_processor->set_attribute( 'data-wp-interactive', 'cno/tabs/private' );
 
 	// Inspect inside the tab-list to see if its vertical or not.
-	$tag_processor->set_bookmark( 'core/tabs_wrapper' );
+	$tag_processor->set_bookmark( 'cno/tabs_wrapper' );
 	while ( $tag_processor->next_tag( array( 'class_name' => 'wp-block-tabs-list' ) ) ) {
 		if ( $tag_processor->has_class( 'is-vertical' ) ) {
 			$is_vertical = true;
 			break;
 		}
 	}
-	$tag_processor->seek( 'core/tabs_wrapper' );
+	$tag_processor->seek( 'cno/tabs_wrapper' );
 
 	$tag_processor->set_attribute(
 		'data-wp-context',
@@ -131,10 +131,10 @@ function block_core_tabs_render_block_callback( array $attributes, string $conte
 	/**
 	 * Builds a client side state for just this tabs instance.
 	 * This allows 3rd party extensibility of tabs while retaining
-	 * client side state management per core/tabs instance, like context.
+	 * client side state management per cno/tabs instance, like context.
 	 */
 	wp_interactivity_state(
-		'core/tabs/private',
+		'cno/tabs/private',
 		array(
 			$tabs_id => $tabs_list,
 		)
@@ -144,7 +144,7 @@ function block_core_tabs_render_block_callback( array $attributes, string $conte
 }
 
 /**
- * Registers the `core/tabs` block on the server.
+ * Registers the `cno/tabs` block on the server.
  *
  * @since 7.0.0
  */

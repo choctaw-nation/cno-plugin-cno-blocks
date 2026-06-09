@@ -30,8 +30,8 @@ export default function Edit( { clientId, context, isSelected } ) {
 	const focusRef = useRef();
 
 	// Consume tab indices from context
-	const activeTabIndex = context[ 'core/tabs-activeTabIndex' ];
-	const editorActiveTabIndex = context[ 'core/tabs-editorActiveTabIndex' ];
+	const activeTabIndex = context[ 'cno/tabs-activeTabIndex' ];
+	const editorActiveTabIndex = context[ 'cno/tabs-editorActiveTabIndex' ];
 	const effectiveActiveIndex = editorActiveTabIndex ?? activeTabIndex;
 
 	// Clean up animation frames on unmount.
@@ -56,7 +56,7 @@ export default function Edit( { clientId, context, isSelected } ) {
 			// Then get the tabs parent
 			const _tabsClientId = getBlockRootClientId( tabPanelsClientId );
 
-			// Get data about this instance of core/tab.
+			// Get data about this instance of cno/tab.
 			const _blockIndex = getBlockIndex( clientId );
 			const _hasInnerBlocksSelected = hasSelectedInnerBlock(
 				clientId,

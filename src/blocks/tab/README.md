@@ -5,7 +5,7 @@
 
 A single tab button in the tab list.
 
-- **Name:** `core/tab`
+- **Name:** `cno/tab`
 - **Category:** [design](https://developer.wordpress.org/block-editor/reference-guides/core-blocks/core-blocks-design/)
 - **API Version:** [3](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-api-versions/)
 - **Block Type:** [Hybrid](https://developer.wordpress.org/block-editor/getting-started/fundamentals/static-dynamic-rendering/) (static save + server enhancements)
@@ -13,7 +13,7 @@ A single tab button in the tab list.
 ## Block Relationships
 
 **[Parent](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#parent) blocks (direct):**
-- [`core/tab-list`](https://developer.wordpress.org/block-editor/reference-guides/core-blocks/core-blocks-design/core-block-tab-list/)
+- [`cno/tab-list`](https://developer.wordpress.org/block-editor/reference-guides/core-blocks/core-blocks-design/core-block-tab-list/)
 
 ## Attributes
 
@@ -44,12 +44,12 @@ _Defined via the [`usesContext` and `providesContext`](https://developer.wordpre
 
 **Uses context:**
 
-- `core/tabs-list`
-- `core/tabs-activeTabIndex`
-- `core/tabs-editorActiveTabIndex`
-- `core/tab-index`
-- `core/tab-id`
-- `core/tab-label`
+- `cno/tabs-list`
+- `cno/tabs-activeTabIndex`
+- `cno/tabs-editorActiveTabIndex`
+- `cno/tab-index`
+- `cno/tab-id`
+- `cno/tab-label`
 
 ## Block Markup
 

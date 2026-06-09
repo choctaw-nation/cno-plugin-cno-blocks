@@ -2,7 +2,7 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"__experimental": true,
 	"apiVersion": 3,
-	"name": "core/tab-panel",
+	"name": "cno/tab-panel",
 	"title": "Tab Panel",
 	"description": "Content for a tab in a tabbed interface.",
 	"category": "design",
@@ -13,11 +13,11 @@
 			"default": ""
 		}
 	},
-	"parent": [ "core/tab-panels" ],
+	"parent": [ "cno/tab-panels" ],
 	"usesContext": [
-		"core/tabs-activeTabIndex",
-		"core/tabs-editorActiveTabIndex",
-		"core/tabs-id"
+		"cno/tabs-activeTabIndex",
+		"cno/tabs-editorActiveTabIndex",
+		"cno/tabs-id"
 	],
 	"supports": {
 		"anchor": true,
@@ -49,7 +49,7 @@
 		"visibility": false
 	},
 	"providesContext": {
-		"core/tab-label": "label"
+		"cno/tab-label": "label"
 	},
 	"editorScript": "file:./index.js",
 	"style": "file:./style-index.css"

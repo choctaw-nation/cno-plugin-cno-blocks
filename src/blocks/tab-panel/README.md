@@ -5,43 +5,44 @@
 
 Content for a tab in a tabbed interface.
 
-- **Name:** `core/tab-panel`
-- **Category:** [design](https://developer.wordpress.org/block-editor/reference-guides/core-blocks/core-blocks-design/)
-- **API Version:** [3](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-api-versions/)
-- **Block Type:** [Hybrid](https://developer.wordpress.org/block-editor/getting-started/fundamentals/static-dynamic-rendering/) (static save + server enhancements)
+-   **Name:** `cno/tab-panel`
+-   **Category:** [design](https://developer.wordpress.org/block-editor/reference-guides/core-blocks/core-blocks-design/)
+-   **API Version:** [3](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-api-versions/)
+-   **Block Type:** [Hybrid](https://developer.wordpress.org/block-editor/getting-started/fundamentals/static-dynamic-rendering/) (static save + server enhancements)
 
 ## Block Relationships
 
 **[Parent](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#parent) blocks (direct):**
-- [`core/tab-panels`](https://developer.wordpress.org/block-editor/reference-guides/core-blocks/core-blocks-design/core-block-tab-panels/)
+
+-   [`cno/tab-panels`](https://developer.wordpress.org/block-editor/reference-guides/core-blocks/core-blocks-design/core-block-tab-panels/)
 
 ## Attributes
 
 _Defined via the [`attributes`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-attributes/) property in block.json._
 
 | Attribute | [Type](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-attributes/#type-validation) | [Default](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-attributes/#default-value) | Description |
-|-----------|------|---------|-------------|
-| `label` | `string` | `""` | — |
+| --------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------- |
+| `label`   | `string`                                                                                                          | `""`                                                                                                               | —           |
 
 ## Supports
 
 _Defined via the [`supports`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/) property in block.json._
 
-- [`anchor`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#anchor): `true`
-- [`html`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#html): `false`
-- [`reusable`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#reusable): `false`
-- [`color`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#color):
-  - [`background`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#color-background): `true`
-  - [`text`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#color-text): `true`
-- [`layout`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#layout): `true`
-- [`spacing`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#spacing):
-  - `blockGap`: `true`
-  - `padding`: `true`
-  - `margin`: `false`
-- [`typography`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#typography):
-  - [`fontSize`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#typography-fontsize): `true`
-- [`renaming`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#renaming): `true`
-- [`visibility`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#visibility): `false`
+-   [`anchor`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#anchor): `true`
+-   [`html`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#html): `false`
+-   [`reusable`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#reusable): `false`
+-   [`color`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#color):
+    -   [`background`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#color-background): `true`
+    -   [`text`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#color-text): `true`
+-   [`layout`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#layout): `true`
+-   [`spacing`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#spacing):
+    -   `blockGap`: `true`
+    -   `padding`: `true`
+    -   `margin`: `false`
+-   [`typography`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#typography):
+    -   [`fontSize`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#typography-fontsize): `true`
+-   [`renaming`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#renaming): `true`
+-   [`visibility`](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/#visibility): `false`
 
 ## Context
 
@@ -49,13 +50,13 @@ _Defined via the [`usesContext` and `providesContext`](https://developer.wordpre
 
 **Uses context:**
 
-- `core/tabs-activeTabIndex`
-- `core/tabs-editorActiveTabIndex`
-- `core/tabs-id`
+-   `cno/tabs-activeTabIndex`
+-   `cno/tabs-editorActiveTabIndex`
+-   `cno/tabs-id`
 
 **Provides context:**
 
-- `core/tab-label` → attribute `label`
+-   `cno/tab-label` → attribute `label`
 
 ## Block Markup
 
@@ -69,7 +70,7 @@ This is a [**hybrid block**](https://developer.wordpress.org/block-editor/gettin
 
 ## Source
 
-- [block.json](https://github.com/WordPress/gutenberg/tree/trunk/packages/block-library/src/tab-panel/block.json) ([reference](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/))
-- [Source directory](https://github.com/WordPress/gutenberg/tree/trunk/packages/block-library/src/tab-panel/) — browse `edit.js`, `save.js`, `index.php`, and more.
+-   [block.json](https://github.com/WordPress/gutenberg/tree/trunk/packages/block-library/src/tab-panel/block.json) ([reference](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/))
+-   [Source directory](https://github.com/WordPress/gutenberg/tree/trunk/packages/block-library/src/tab-panel/) — browse `edit.js`, `save.js`, `index.php`, and more.
 
 <!-- END TOKEN(Autogenerated block API docs) -->

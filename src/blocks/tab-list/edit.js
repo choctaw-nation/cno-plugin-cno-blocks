@@ -14,7 +14,7 @@ import { useSelect } from '@wordpress/data';
 import AddTabToolbarControl from '../tab-panel/add-tab-toolbar-control';
 import RemoveTabToolbarControl from '../tab-panel/remove-tab-toolbar-control';
 
-const TAB_LIST_TEMPLATE = [ [ 'core/tab' ], [ 'core/tab' ] ];
+const TAB_LIST_TEMPLATE = [ [ 'cno/tab' ], [ 'cno/tab' ] ];
 
 function Edit( { clientId } ) {
 	const tabsClientId = useSelect(
@@ -26,7 +26,7 @@ function Edit( { clientId } ) {
 	const blockProps = useBlockProps();
 
 	const innerBlocksProps = useInnerBlocksProps( blockProps, {
-		allowedBlocks: [ 'core/tab' ],
+		allowedBlocks: [ 'cno/tab' ],
 		orientation: 'horizontal',
 		template: TAB_LIST_TEMPLATE,
 		templateLock: false,
