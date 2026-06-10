@@ -10,6 +10,7 @@ import {
 	useBlockProps,
 	store as blockEditorStore,
 	RichText,
+	useInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useMemo, useCallback } from '@wordpress/element';
@@ -121,13 +122,15 @@ function Edit( { context, clientId } ) {
 		tabIndex: -1,
 		onClick: handleTabClick,
 	} );
+	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps );
 
 	return (
 		<>
 			<Controls tabsClientId={ tabsClientId } />
-			<button { ...blockProps } type="button">
+			<button { ...innerBlocksProps } type="button">
+				{ children }
 				<RichText
-					tagName="span"
+					tagName="div"
 					withoutInteractiveFormatting
 					placeholder="Tab title"
 					value={ label }

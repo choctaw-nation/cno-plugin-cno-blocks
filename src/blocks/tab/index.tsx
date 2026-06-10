@@ -3,7 +3,7 @@
  */
 import { tab as icon } from '@wordpress/icons';
 import { registerBlockType } from '@wordpress/blocks';
-import { useBlockProps } from '@wordpress/block-editor';
+import { InnerBlocks } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
@@ -20,12 +20,5 @@ export { metadata, name };
 registerBlockType( name, {
 	icon,
 	edit: Edit,
-	save: () => {
-		const blockProps = useBlockProps.save( {
-			type: 'button',
-			role: 'tab',
-		} );
-
-		return <button { ...blockProps } />;
-	},
+	save: () => <InnerBlocks.Content />,
 } );
