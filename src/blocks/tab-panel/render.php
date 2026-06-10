@@ -37,7 +37,7 @@ if ( empty( $tab_id ) ) {
  */
 $tag_processor->set_attribute(
 	'data-wp-interactive',
-	'cno/tabs/private'
+	'cno/tabs'
 );
 $tag_processor->set_attribute(
 	'data-wp-context',

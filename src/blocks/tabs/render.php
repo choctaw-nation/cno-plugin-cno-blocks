@@ -23,7 +23,7 @@ $is_vertical = false;
 $tag_processor = new WP_HTML_Tag_Processor( $content );
 
 $tag_processor->next_tag( array( 'class_name' => 'wp-block-cno-tabs' ) );
-$tag_processor->set_attribute( 'data-wp-interactive', 'cno/tabs/private' );
+$tag_processor->set_attribute( 'data-wp-interactive', 'cno/tabs' );
 
 // Inspect inside the tab-list to see if its vertical or not.
 $tag_processor->set_bookmark( 'cno/tabs_wrapper' );
@@ -56,7 +56,7 @@ $output = $tag_processor->get_updated_html();
  * client side state management per cno/tabs instance, like context.
  */
 wp_interactivity_state(
-	'cno/tabs/private',
+	'cno/tabs',
 	array(
 		$tabs_id => $tabs_list,
 	)
