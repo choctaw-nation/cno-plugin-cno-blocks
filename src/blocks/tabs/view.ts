@@ -12,6 +12,10 @@ type TabsContext = {
 	tabsId: string;
 	isVertical: boolean;
 };
+type TabPanelContext = {
+	id: string;
+	index: number;
+};
 type ServerState = {
 	[ key: string ]: Array< {
 		id: string;
@@ -25,25 +29,22 @@ const { actions, state } = store( 'cno/tabs', {
 		 * Context-aware list of tabs for the current tabs block.
 		 * @type {Array}
 		 */
-		get tabsList() {
+		get tabsList(): Array< { id: string; label: string; index: number } > {
 			const context = getContext< TabsContext >();
 			const tabsId = context?.tabsId;
 			return state[ tabsId ] || [];
 		},
 		/**
 		 * Index of the active tab element (label or panel).
-		 * @type {number|null}
 		 */
-		get tabIndex() {
+		get tabIndex(): number | null {
 			const { attributes } = getElement();
 			const tabId = attributes?.id?.replace( 'tab__', '' ) || null;
 			if ( ! tabId ) {
 				return null;
 			}
-			// console.log( 'Finding tab index for tabId:', tabId );
 			const tabsList = state.tabsList;
-			console.log( 'Current tabsList:', tabsList );
-			const tabIndex = tabsList.findIndex( ( t ) => t.id === tabId );
+			const tabIndex = tabsList?.findIndex( ( t ) => t.id === tabId );
 			return tabIndex;
 		},
 		/**
@@ -52,10 +53,16 @@ const { actions, state } = store( 'cno/tabs', {
 		 */
 		get isActiveTab() {
 			const context = getContext< TabsContext >();
-			console.log( 'Context in isActiveTab:', context );
 			const { activeTabIndex } = context;
-			const { tabIndex } = state;
+			const tabIndex = state.tabIndex;
 			return activeTabIndex === tabIndex;
+		},
+		get isActiveTabPanel() {
+			const context = getContext< TabsContext & TabPanelContext >();
+			const { activeTabIndex } = context;
+			const { attributes } = getElement();
+			const index = attributes[ 'data-tab-panel-index' ];
+			return activeTabIndex === Number( index );
 		},
 		/**
 		 * Tabindex attribute for tab buttons.
@@ -89,14 +96,10 @@ const { actions, state } = store( 'cno/tabs', {
 				actions.moveFocus( tabIndex - 1 );
 			}
 		} ),
-		handleTabClick: withSyncEvent( ( event ) => {
-			event.preventDefault();
-
-			const { tabIndex } = state;
-			if ( tabIndex !== null ) {
-				actions.setActiveTab( tabIndex );
-			}
-		} ),
+		handleTabClick() {
+			const tabIndex = state.tabIndex;
+			actions.setActiveTab( Number( tabIndex ) );
+		},
 		moveFocus: ( tabIndex ) => {
 			const tabsList = state.tabsList;
 
@@ -131,13 +134,7 @@ const { actions, state } = store( 'cno/tabs', {
 				newIndex = tabsList.length - 1;
 			}
 
-			const context = getContext();
-			console.log(
-				'Setting active tab index:',
-				newIndex,
-				'Context before update:',
-				context
-			);
+			const context = getContext< TabsContext >();
 			context.activeTabIndex = newIndex;
 
 			if ( scrollToTab ) {
@@ -165,6 +162,12 @@ const { actions, state } = store( 'cno/tabs', {
 			if ( tabIndex >= 0 ) {
 				actions.setActiveTab( tabIndex, true );
 			}
+		},
+		getTabAriaLabelledBy: () => {
+			const { attributes } = getElement();
+			const id = attributes[ 'data-tabs-id' ];
+			const index = attributes[ 'data-tab-panel-index' ];
+			return `tab__${ id }-tab-${ index }`;
 		},
 	},
 } );

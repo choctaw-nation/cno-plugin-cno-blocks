@@ -10,13 +10,18 @@
 		"label": {
 			"type": "string",
 			"default": ""
+		},
+		"index": {
+			"type": "number",
+			"default": 0
 		}
 	},
 	"parent": [ "cno/tab-panels" ],
 	"usesContext": [
 		"cno/tabs-activeTabIndex",
 		"cno/tabs-editorActiveTabIndex",
-		"cno/tabs-id"
+		"cno/tabs-id",
+		"cno/tabs-list"
 	],
 	"supports": {
 		"anchor": true,

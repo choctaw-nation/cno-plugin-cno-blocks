@@ -127,7 +127,7 @@ function Edit( { context, clientId } ) {
 	return (
 		<>
 			<Controls tabsClientId={ tabsClientId } />
-			<button { ...innerBlocksProps } type="button">
+			<div { ...innerBlocksProps } type="button">
 				{ children }
 				<RichText
 					tagName="div"
@@ -136,7 +136,7 @@ function Edit( { context, clientId } ) {
 					value={ label }
 					onChange={ handleLabelChange }
 				/>
-			</button>
+			</div>
 		</>
 	);
 }

@@ -22,13 +22,14 @@ if ( empty( $tab_id ) ) {
 }
 $block_attributes = get_block_wrapper_attributes(
 	array(
+		'type'                        => 'button',
 		'id'                          => 'tab__' . esc_attr( $tab_id ),
 		'aria-controls'               => esc_attr( $tab_id ),
 		'data-wp-on--click'           => 'actions.handleTabClick',
 		'data-wp-on--keydown'         => 'actions.handleTabKeyDown',
 		'data-wp-bind--aria-selected' => 'state.isActiveTab',
 		'data-wp-bind--tabindex'      => 'state.tabIndexAttribute',
-		'data-wp-context'             => wp_json_encode( array( 'tabIndex' => $tab_index ) ),
+		'data-tab-index'              => $tab_index,
 	)
 );
 ?>
