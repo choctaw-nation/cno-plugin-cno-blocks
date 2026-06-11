@@ -20,20 +20,28 @@
 	// Inherit typography from parent
 	font-size: inherit;
 	font-family: inherit;
-	font-weight: inherit;
+	font-weight: 600;
 	line-height: inherit;
 	letter-spacing: inherit;
 	text-transform: inherit;
 	text-align: inherit;
 
-	&[aria-selected="true"]::before,
-	&.is-active::before {
-		content: "";
-		position: absolute;
-		border-bottom: 2px solid currentcolor;
-		pointer-events: none;
-		left: 0;
-		width: 100%;
-		bottom: 0;
+	&:not(.has-border-color) {
+		&[aria-selected="true"]::before,
+		&.is-active::before {
+			content: "";
+			position: absolute;
+			border-bottom: 2px solid currentcolor;
+			pointer-events: none;
+			left: 0;
+			width: 100%;
+			bottom: 0;
+		}
+	}
+
+	&.has-background {
+		&[aria-selected="true"] {
+			background-color: white !important;
+		}
 	}
 }

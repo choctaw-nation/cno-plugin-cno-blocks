@@ -17,9 +17,13 @@ const { name } = metadata;
 registerBlockType( name, {
 	icon,
 	edit: Edit,
-	save: () => {
+	save: ( { attributes } ) => {
 		const blockProps = useBlockProps.save( {
 			role: 'tabpanel',
+			'data-tab-panel-index': attributes.index ?? undefined,
+			'data-wp-bind--hidden': '!state.isActiveTabPanel',
+			'data-wp-bind--aria-labelledby': 'callbacks.getTabAriaLabelledBy',
+			tabindex: '0',
 		} );
 		const innerBlocksProps = useInnerBlocksProps.save( blockProps );
 

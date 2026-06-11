@@ -25,7 +25,24 @@ const TEMPLATE = [
 
 const { cancelAnimationFrame } = window;
 
-export default function Edit( { clientId, context, isSelected } ) {
+export default function Edit( {
+	clientId,
+	context,
+	isSelected,
+	attributes,
+	setAttributes,
+} ) {
+	useEffect( () => {
+		if ( ! attributes.index ) {
+			const blockIndex = context[ 'cno/tabs-list' ]?.findIndex(
+				( tab ) => tab.clientId === clientId
+			);
+			if ( blockIndex !== undefined && blockIndex !== -1 ) {
+				setAttributes( { index: blockIndex } );
+			}
+		}
+	}, [ attributes.index, context, setAttributes, clientId ] );
+
 	const focusRef = useRef();
 
 	// Consume tab indices from context
@@ -127,7 +144,7 @@ export default function Edit( { clientId, context, isSelected } ) {
 		tabIndex: isSelectedTab ? 0 : -1,
 	} );
 
-	const innerBlocksProps = useInnerBlocksProps( blockProps, {
+	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
 		template: TEMPLATE,
 	} );
 
@@ -138,7 +155,7 @@ export default function Edit( { clientId, context, isSelected } ) {
 				blockIndex={ blockIndex }
 				isDefaultTab={ isDefaultTab }
 			/>
-			{ isSelectedTab && innerBlocksProps.children }
+			{ isSelectedTab && children }
 		</section>
 	);
 }

@@ -38,8 +38,10 @@
 		},
 		"spacing": {
 			"padding": true,
+			"blockGap": true,
 			"__experimentalDefaultControls": {
-				"padding": true
+				"padding": true,
+				"blockGap": true
 			}
 		},
 		"__experimentalBorder": {
@@ -47,6 +49,24 @@
 			"color": true,
 			"width": true,
 			"style": true
+		},
+		"layout": {
+			"allowEditing": true,
+			"allowOrientation": true,
+			"allowJustification": true,
+			"allowSwitching": true,
+			"allowWrap": true,
+			"allowVerticalAlignment": true,
+			"allowCustomContentAndWideSize": false,
+			"allowInheriting": true,
+			"allowSizingOnChildren": false,
+			"default": {
+				"type": "flex",
+				"justifyContent": "center",
+				"verticalAlignment": "center",
+				"flexWrap": "wrap",
+				"orientation": "vertical"
+			}
 		}
 	},
 	"editorScript": "file:./index.js",

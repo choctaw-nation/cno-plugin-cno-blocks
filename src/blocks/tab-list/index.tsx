@@ -10,6 +10,7 @@ import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
  */
 import Edit from './Edit';
 import metadata from './block.json';
+import './style.scss';
 
 const { name } = metadata;
 
