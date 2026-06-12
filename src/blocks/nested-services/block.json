@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cno/nested-services",
+	"title": "Nested Services",
+	"description": "A block for nested services.",
+	"category": "widgets",
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"color": {
+			"background": true,
+			"text": true
+		},
+		"typography": {
+			"fontSize": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": false
+		},
+		"multiple": false
+	},
+	"editorScript": "file:./index.tsx",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}
