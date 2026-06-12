@@ -35,12 +35,24 @@ class Plugin_Loader {
 		$this->dir_url  = $dir_url;
 	}
 
+	/**
+	 * Load Plugin
+	 */
 	public function load_plugin() {
 		add_action( 'init', array( $this, 'register_blocks' ) );
 		add_action( 'enqueue_block_editor_assets', array( $this, 'add_editor_scripts' ) );
-		$rest_router = new Rest_Router();
-		add_action( 'rest_api_init', array( $rest_router, 'register_routes' ) );
+		add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
 		$this->handle_tabs_blocks();
+	}
+
+	/**
+	 * Registers REST API Routes
+	 */
+	public function register_rest_routes() {
+		$i11y_rest_router = new Routes\Interactivity_Rest_Router();
+		$i11y_rest_router->register_routes();
+		$acf_rest_router = new Routes\ACF_Rest_Router();
+		$acf_rest_router->register_routes();
 	}
 
 	/**

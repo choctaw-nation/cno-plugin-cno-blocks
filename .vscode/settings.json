@@ -42,10 +42,12 @@
 		"alignfull",
 		"choctawnation",
 		"classmap",
+		"cnhsa",
 		"featuredmedia",
 		"IAPI",
 		"innerblocks",
-		"kses"
+		"kses",
+		"numberposts"
 	],
 	"css.format.spaceAroundSelectorSeparator": true,
 	"editor.codeActionsOnSave": {

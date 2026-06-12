@@ -6,7 +6,7 @@
  * @subpackage CNO_Blocks
  */
 
-namespace ChoctawNation\CNO_Blocks;
+namespace ChoctawNation\CNO_Blocks\Routes;
 
 use ChoctawNation\CNO_Blocks\Jobs\Gravity_Forms_Parser;
 use WP_REST_Controller;
@@ -15,7 +15,7 @@ use WP_REST_Response;
 use WP_REST_Server;
 
 /** Handles REST API routes for Interactivity Blocks */
-class Rest_Router extends WP_REST_Controller {
+class Interactivity_Rest_Router extends WP_REST_Controller {
 	/**
 	 * Registers the routes for the REST API
 	 *

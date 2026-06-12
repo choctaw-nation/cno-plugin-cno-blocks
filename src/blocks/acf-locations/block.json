@@ -1,0 +1,19 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cno/acf-locations",
+	"title": "ACF Locations",
+	"description": "A block for displaying locations set with the ACF field.",
+	"category": "widgets",
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"multiple": false,
+		"alignWide": true,
+		"align": true
+	},
+	"editorScript": "file:./index.tsx",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}
