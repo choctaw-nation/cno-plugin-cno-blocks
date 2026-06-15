@@ -15,8 +15,6 @@ import metadata from './block.json';
 
 const { name } = metadata;
 
-export { metadata, name };
-
 registerBlockType( name, {
 	icon,
 	edit: Edit,
