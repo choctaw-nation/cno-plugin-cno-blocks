@@ -14,17 +14,17 @@
 	border: 0;
 	font-size: var(--wp--preset--font-size--base);
 
-	&.is-style-solid {
+	&:not(.is-style-link) {
 		@extend %btn-styles;
+	}
 
-		background-color: var(--wp--preset--color--primary);
-		color: white;
+	background-color: var(--wp--preset--color--primary);
+	color: white;
 
-		&:focus,
-		&:hover,
-		&:active {
-			background-color: var(--wp--preset--color--primary-light);
-		}
+	&:focus,
+	&:hover,
+	&:active {
+		background-color: var(--wp--preset--color--primary-light);
 	}
 
 	&.is-style-link {
@@ -35,8 +35,6 @@
 	}
 
 	&.is-style-outline {
-		@extend %btn-styles;
-
 		background-color: white;
 		color: var(--wp--preset--color--primary);
 		border: 3px solid var(--wp--preset--color--primary);
