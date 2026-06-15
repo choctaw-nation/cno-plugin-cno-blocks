@@ -1,0 +1,5 @@
+.wp-block-cno-tab-list {
+	.block-editor-block-list__block:has(> .wp-block-cno-tab) {
+		display: contents;
+	}
+}

@@ -38,7 +38,18 @@
 		"editor.useTabStops": true,
 		"prettier.useTabs": false
 	},
-	"cSpell.words": [ "alignfull", "featuredmedia" ],
+	"cSpell.words": [
+		"alignfull",
+		"choctawnation",
+		"classmap",
+		"cnhsa",
+		"featuredmedia",
+		"IAPI",
+		"innerblocks",
+		"kses",
+		"numberposts",
+		"wpengine"
+	],
 	"css.format.spaceAroundSelectorSeparator": true,
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": "always",

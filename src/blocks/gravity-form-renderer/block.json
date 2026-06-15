@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"version": "1.0.0",
+	"name": "cno/gravity-form-renderer",
+	"title": "Gravity Form Renderer",
+	"icon": "block-default",
+	"category": "embed",
+	"description": "Custom Gravity Form renderer for use in modals and other interactive contexts.",
+	"ancestor": [ "cno/modal" ],
+	"supports": {
+		"html": false,
+		"interactivity": true
+	},
+	"attributes": {
+		"formId": {
+			"type": "number"
+		},
+		"formTitle": {
+			"type": "string",
+			"default": "Select a Gravity Form to display"
+		}
+	},
+	"editorScript": "file:./index.tsx",
+	"render": "file:./render.php",
+	"viewStyle": "file:./style-index.css",
+	"viewScriptModule": "file:./view.ts"
+}

@@ -1,0 +1,63 @@
+@use "./button-styles" as *;
+
+.wp-block-cno-acf-locations {
+	p {
+		margin-block: 0 0.5rem;
+	}
+
+	button {
+		@extend %button-styles;
+
+		font-family: inherit;
+		font-size: var(--wp--preset--font-size--root);
+	}
+}
+
+.location-card {
+	.single-location & {
+		flex: 1 1 100%;
+		flex-flow: row wrap;
+
+		img {
+			flex: 1 1 50%;
+
+			@media (width > 921px) {
+				height: 100%;
+			}
+		}
+	}
+
+	img {
+		aspect-ratio: 16 / 9;
+		object-fit: cover;
+		width: 100%;
+	}
+}
+
+.directions-button {
+	background-color: var(--wp--preset--color--primary);
+	color: white;
+	border-color: var(--wp--preset--color--primary);
+
+	&:hover,
+	&:focus,
+	&:active {
+		background-color: transparent;
+		color: var(--wp--preset--color--primary);
+		border-color: var(--wp--preset--color--primary);
+	}
+}
+
+.call-button {
+	background-color: transparent;
+	color: var(--wp--preset--color--primary-light);
+	border-color: var(--wp--preset--color--primary-light);
+
+	&:hover,
+	&:focus,
+	&:active {
+		background-color: var(--wp--preset--color--primary-light);
+		color: white;
+		border-color: var(--wp--preset--color--primary-light);
+	}
+}

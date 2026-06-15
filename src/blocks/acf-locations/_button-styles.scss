@@ -1,0 +1,17 @@
+%button-styles {
+	display: block;
+	text-align: center;
+	padding-block: var(--wp--preset--spacing--base);
+	width: 100%;
+	border-width: 1px;
+	border-style: solid;
+	margin-block: var(--wp--preset--spacing--xs);
+	transition:
+		background-color var(--wp--custom--transition--standard),
+		border-color var(--wp--custom--transition--standard),
+		color var(--wp--custom--transition--standard);
+
+	&:first-of-type {
+		margin-top: auto;
+	}
+}

@@ -1,0 +1,47 @@
+.wp-block-cno-tab {
+	box-sizing: border-box;
+	color: inherit;
+	display: block;
+	width: max-content;
+	text-decoration: none;
+	cursor: pointer;
+	flex-basis: inherit !important;
+	flex-grow: inherit !important;
+	position: relative;
+
+	// Button reset
+	border: none;
+	background: none;
+	appearance: none;
+	margin: 0;
+	padding: var(--wp--preset--spacing--sm, 0.5rem)
+		var(--wp--preset--spacing--sm, 0.5rem);
+
+	// Inherit typography from parent
+	font-size: inherit;
+	font-family: inherit;
+	font-weight: 600;
+	line-height: inherit;
+	letter-spacing: inherit;
+	text-transform: inherit;
+	text-align: inherit;
+
+	&:not(.has-border-color) {
+		&[aria-selected="true"]::before,
+		&.is-active::before {
+			content: "";
+			position: absolute;
+			border-bottom: 2px solid currentcolor;
+			pointer-events: none;
+			left: 0;
+			width: 100%;
+			bottom: 0;
+		}
+	}
+
+	&.has-background {
+		&[aria-selected="true"] {
+			background-color: white !important;
+		}
+	}
+}

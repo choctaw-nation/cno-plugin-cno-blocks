@@ -1,0 +1,43 @@
+@mixin link-styles {
+	color: var(--wp--preset--color--dark);
+	text-decoration-color: transparent;
+	transition: text-decoration-color var(--wp--custom--transition--standard);
+
+	&:hover,
+	&:active,
+	&:focus {
+		text-decoration-color: var(--wp--preset--color--dark);
+	}
+}
+
+.wp-block-cno-nested-services {
+	.parent-title {
+		font-weight: 700;
+		display: inline-flex;
+		color: var(--wp--preset--color--dark);
+		gap: 0.5rem;
+		align-items: center;
+
+		@include link-styles;
+	}
+
+	p {
+		margin: 0;
+	}
+
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	li {
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+
+		a {
+			@include link-styles;
+		}
+	}
+}
