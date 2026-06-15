@@ -9,7 +9,7 @@ export const gformHelpers = {
 
 	isHiddenField() {
 		return (
-			getContext< GravityFormsContext >().field.visibility === 'hidden'
+			getContext< GravityFormsContext >().field.visibility !== 'visible'
 		);
 	},
 

@@ -1,7 +1,7 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"name": "cno/gravity-form-renderer",
 	"title": "Gravity Form Renderer",
 	"icon": "block-default",
@@ -14,11 +14,16 @@
 	},
 	"attributes": {
 		"formId": {
-			"type": "number"
+			"type": "number",
+			"default": 0
 		},
 		"formTitle": {
 			"type": "string",
 			"default": "Select a Gravity Form to display"
+		},
+		"prefilledValues": {
+			"type": "object",
+			"default": {}
 		}
 	},
 	"editorScript": "file:./index.tsx",

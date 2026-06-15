@@ -104,7 +104,6 @@ store( GRAVITY_FORMS_RENDERER_STORE, {
 				}
 
 				const form = await response.json();
-
 				context.form = normalizeForm( form );
 				context.values = {};
 				context.errors = {};
