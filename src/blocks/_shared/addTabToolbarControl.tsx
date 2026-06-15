@@ -14,7 +14,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
  * Inserts a new cno/tab-panel into the tab-panels and a new cno/tab
  * into the tab-list, keeping both in sync.
  *
- * @param {Object} props
+ * @param {Object} props              Props object.
  * @param {string} props.tabsClientId The client ID of the parent tabs block.
  * @return {React.JSX.Element} The toolbar control element.
  */

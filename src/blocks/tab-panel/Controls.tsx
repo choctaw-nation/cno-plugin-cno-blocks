@@ -5,11 +5,13 @@ import {
 	InspectorControls,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
+/* eslint-disable @wordpress/no-unsafe-wp-apis */
 import {
 	CheckboxControl,
 	__experimentalToolsPanel as ToolsPanel,
 	__experimentalToolsPanelItem as ToolsPanelItem,
 } from '@wordpress/components';
+/* eslint-enable @wordpress/no-unsafe-wp-apis */
 import { useDispatch } from '@wordpress/data';
 
 /**

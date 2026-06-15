@@ -10,6 +10,7 @@ export default defineConfig( [
 	{
 		files: [ 'src/**/*.{js,ts,jsx,tsx}' ],
 		rules: {
+			'@typescript-eslint/no-shadow': 'off',
 			'jsdoc/require-param': 'off',
 			'jsdoc/require-param-description': 'error',
 			'jsdoc/require-param-name': 'off',

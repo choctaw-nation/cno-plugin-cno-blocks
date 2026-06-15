@@ -17,7 +17,7 @@ import { useEffect, useRef } from '@wordpress/element';
  * When both lists change simultaneously (e.g. the "Add Tab" toolbar button,
  * which inserts both at once), no action is needed and the effect exits early.
  *
- * @param {Object}      props
+ * @param {Object}      props                   Props object.
  * @param {Array}       props.tabs              Raw cno/tab block objects.
  * @param {Array}       props.tabPanels         Raw cno/tab-panel block objects.
  * @param {string|null} props.tabPanelsClientId Client ID of the cno/tab-panels block.

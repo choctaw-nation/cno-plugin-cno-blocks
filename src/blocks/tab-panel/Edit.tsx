@@ -54,6 +54,7 @@ export default function Edit( {
 	useEffect( () => {
 		return () => {
 			if ( focusRef.current ) {
+				// eslint-disable-next-line react-hooks/exhaustive-deps -- Ignore, we only want to cancel the specific animation frame that may be pending on unmount.
 				cancelAnimationFrame( focusRef.current );
 			}
 		};

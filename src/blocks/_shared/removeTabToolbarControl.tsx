@@ -13,7 +13,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
  * Removes the currently active cno/tab-panel and its corresponding
  * cno/tab, keeping both in sync.
  *
- * @param {Object} props
+ * @param {Object} props              Props object.
  * @param {string} props.tabsClientId The client ID of the parent tabs block.
  * @return {React.JSX.Element} The toolbar control element.
  */
