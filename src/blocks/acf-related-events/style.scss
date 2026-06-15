@@ -1,0 +1,36 @@
+.wp-block-cno-acf-related-events {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+
+	&__event {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		color: inherit;
+
+		svg,
+		i {
+			color: inherit;
+			fill: currentcolor;
+			flex: 0 0 auto;
+		}
+
+		i {
+			font-size: 1em;
+		}
+
+		time {
+			color: inherit;
+			flex: 0 0 auto;
+			overflow-wrap: nowrap;
+		}
+	}
+
+	&__event-title {
+		flex: 1 1 auto;
+	}
+}

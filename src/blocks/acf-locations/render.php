@@ -1,10 +1,6 @@
 <?php
 /**
- * Render callback for cno/tab.
- *
- * Injects the tab label and IAPI directives into the saved button HTML.
- * Per-item context (index, id, label) is provided by the parent tab-list
- * render callback before this is called.
+ * Render callback for locations block.
  *
  * @var array     $attributes Block attributes.
  * @var string    $content    Block content (styled button from save.js).

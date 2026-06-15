@@ -7,6 +7,7 @@
 
 namespace ChoctawNation\CNO_Blocks\Routes;
 
+use DateTime;
 use WP_Error;
 use WP_REST_Controller;
 use WP_REST_Request;
@@ -43,13 +44,31 @@ class ACF_Rest_Router extends WP_REST_Controller {
 				),
 			)
 		);
+		register_rest_route(
+			$namespace,
+			'/services/(?P<id>\d+)/events',
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'get_events' ),
+				'permission_callback' => '__return_true',
+				'args'                => array(
+					'id' => array(
+						'validate_callback' => function ( $param ) {
+							return is_numeric( $param );
+						},
+						'sanitize_callback' => 'absint',
+						'required'          => true,
+					),
+				),
+			)
+		);
 	}
 
 	/**
 	 * Gets locations for a given service post ID
 	 *
 	 * @param WP_REST_Request $request The REST request object containing parameters
-	 * @return WP_REST_Response|WP_Error The REST response containing location data or an
+	 * @return WP_REST_Response|WP_Error The REST response containing location data or an error
 	 */
 	public function get_locations( WP_REST_Request $request ): WP_REST_Response|WP_Error {
 		$id        = $request->get_param( 'id' );
@@ -63,6 +82,70 @@ class ACF_Rest_Router extends WP_REST_Controller {
 			wp_parse_id_list( $location_ids )
 		);
 		return rest_ensure_response( $locations_data );
+	}
+
+	/**
+	 * Gets events for a given service post ID
+	 *
+	 * @param WP_REST_Request $request The REST request object containing parameters
+	 * @return WP_REST_Response|WP_Error The REST response containing event data or an error
+	 */
+	public function get_events( WP_REST_Request $request ): WP_REST_Response|WP_Error {
+		$id        = $request->get_param( 'id' );
+		$post_type = get_post_type( $id );
+		if ( 'services' !== $post_type ) {
+			return new WP_Error( 'invalid_post_type', 'Invalid post type. Expected "services".', array( 'status' => 400 ) );
+		}
+		$events      = get_field( 'related_events', $id );
+		$events_data = $this->get_events_data( $events );
+		return rest_ensure_response( $events_data );
+	}
+
+	/**
+	 * Gets event data for an array of event IDs
+	 *
+	 * @param int[] $event_ids Array of event post IDs
+	 * @return array<int, array{
+	 *     id: int,
+	 *     title: string,
+	 *     permalink: string,
+	 *     isVirtual: bool,
+	 *     prettyStartDate: string,
+	 *     startDate: string
+	 * }> Array of event data
+	 */
+	public function get_events_data( array $event_ids ): array {
+		$timezone    = wp_timezone();
+		$events_data = array_map(
+			function ( $event ) use ( $timezone ) {
+				$is_published = 'publish' === get_post_status( $event );
+				if ( ! $is_published ) {
+					return null; // Skip unpublished events
+				}
+				$is_virtual_event = get_post_meta( $event, 'virtual_event', true ) === '1';
+				$start_date       = get_post_meta( $event, 'start_date', true );
+				if ( ! $start_date ) {
+					return null; // Skip events without a start date
+				}
+				$js_start_date = DateTime::createFromFormat( 'Ymd', $start_date, $timezone );
+				return array(
+					'id'              => $event,
+					'title'           => get_the_title( $event ),
+					'permalink'       => get_permalink( $event ),
+					'isVirtual'       => $is_virtual_event,
+					'prettyStartDate' => $js_start_date ? $js_start_date->format( 'Y-m-d' ) : $start_date,
+					'startDate'       => $js_start_date ? $js_start_date->format( DATE_ATOM ) : $start_date,
+				);
+			},
+			$event_ids
+		);
+		usort(
+			$events_data,
+			function ( $a, $b ) {
+				return strtotime( $a['startDate'] ) <=> strtotime( $b['startDate'] );
+			}
+		);
+		return $events_data;
 	}
 
 	/**
