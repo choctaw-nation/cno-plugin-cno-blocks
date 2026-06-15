@@ -1,0 +1,26 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"version": "1.0.0",
+	"name": "cno/modal",
+	"title": "Modal",
+	"icon": "block-default",
+	"category": "widgets",
+	"description": "Modal",
+	"supports": {
+		"inserter": false,
+		"multiple": false,
+		"reusable": false,
+		"html": false,
+		"interactivity": true
+	},
+	"attributes": {
+		"showInternals": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"editorScript": "file:./index.tsx",
+	"viewStyle": "file:./style-index.css",
+	"viewScriptModule": "file:./view.ts"
+}

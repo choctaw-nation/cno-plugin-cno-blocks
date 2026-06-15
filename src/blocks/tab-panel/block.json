@@ -1,0 +1,61 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cno/tab-panel",
+	"title": "Tab Panel",
+	"description": "Content for a tab in a tabbed interface.",
+	"category": "design",
+	"textdomain": "default",
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": ""
+		},
+		"index": {
+			"type": "number",
+			"default": 0
+		}
+	},
+	"parent": [ "cno/tab-panels" ],
+	"usesContext": [
+		"cno/tabs-activeTabIndex",
+		"cno/tabs-editorActiveTabIndex",
+		"cno/tabs-id",
+		"cno/tabs-list"
+	],
+	"supports": {
+		"anchor": true,
+		"html": false,
+		"reusable": false,
+		"color": {
+			"background": true,
+			"text": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"layout": true,
+		"spacing": {
+			"blockGap": true,
+			"padding": true,
+			"margin": false
+		},
+		"typography": {
+			"fontSize": true,
+			"__experimentalFontFamily": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"__experimentalFontFamily": true
+			}
+		},
+		"renaming": true,
+		"visibility": false
+	},
+	"providesContext": {
+		"cno/tab-label": "label"
+	},
+	"editorScript": "file:./index.tsx",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}
