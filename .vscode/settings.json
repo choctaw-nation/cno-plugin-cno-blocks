@@ -47,7 +47,8 @@
 		"IAPI",
 		"innerblocks",
 		"kses",
-		"numberposts"
+		"numberposts",
+		"wpengine"
 	],
 	"css.format.spaceAroundSelectorSeparator": true,
 	"editor.codeActionsOnSave": {

@@ -25,7 +25,7 @@ foreach ( $block->parsed_block['innerBlocks'] ?? array() as $parsed_tab ) {
 		continue;
 	}
 
-	$tab       = $tabs_list[ $tab_position ] ?? null;
+	$tab       = $tabs_list[ $tab_position ] ?? null; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 	$tab_index = $tab_position;
 	++$tab_position;
 
