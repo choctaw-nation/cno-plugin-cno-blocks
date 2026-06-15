@@ -29,7 +29,8 @@ $locations          = get_posts(
 		'update_post_term_cache' => false,
 	)
 );
-	$locations_data = array();
+$is_single_location = count( $locations ) === 1;
+$locations_data     = array();
 
 foreach ( $locations as $location ) {
 	$fields     = get_fields( $location->ID ) ?: array(); // phpcs:ignore Universal.Operators.DisallowShortTernary.Found
@@ -47,22 +48,29 @@ foreach ( $locations as $location ) {
 			)
 		),
 		'directionsLink' => $fields['directions_link'] ?? '',
-		'image'          => $image_id ? wp_get_attachment_image_url( $image_id, 'full' ) : null,
+		'image'          => $image_id ? wp_get_attachment_image(
+			$image_id,
+			'full',
+			false,
+			array(
+				'loading' => 'lazy',
+			)
+		) : null,
 		'phoneNumber'    => $fields['phone_number'] ?? '',
 	);
 }
-$block_attributes = get_block_wrapper_attributes();
+$block_attributes = get_block_wrapper_attributes( array( 'class' => $is_single_location ? 'single-location' : '' ) );
 ?>
 <ul <?php echo $block_attributes; ?>>
 	<?php
 	foreach ( $locations_data as $location ) {
 		$markup  = '<li class="location-card">';
-		$markup .= wp_get_attachment_image( $location['image'], 'full', false, array( 'loading' => 'lazy' ) );
+		$markup .= $location['image'];
 		$markup .= '<div class="location-card__body">';
 		$markup .= sprintf( '<h3 class="location-title">%s</h3>', $location['title'] );
-		$markup .= sprintf( '<p>%s<br/>%s</p>', $location['address'], $location['city_state_zip'] );
-		$markup .= sprintf( '<a href="%s" class="directions-button">Get Directions</a>', $location['directionsLink'] );
-		$markup .= sprintf( '<a href="tel:%s" class="call-button">Contact</a>', $location['phoneNumber'] );
+		$markup .= sprintf( '<p>%s</p>', $location['address'] );
+		$markup .= sprintf( '<a href="%s" target="_blank" rel="noopener noreferrer" class="directions-button"><i class="fa-solid fa-location-dot"></i> Get Directions</a>', $location['directionsLink'] );
+		$markup .= sprintf( '<a href="tel:%s" class="call-button"><i class="fa-solid fa-phone"></i> Contact</a>', $location['phoneNumber'] );
 		$markup .= '</div>';
 		$markup .= '</li>';
 		echo $markup;
