@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.1.0 - [June 15, 2026]
+
+-   Added: Services Contact Form Block
+
 ## v2.0.1 - [June 15, 2026]
 
 -   Fixed: "Vendor" folder is included in plugin zip script
