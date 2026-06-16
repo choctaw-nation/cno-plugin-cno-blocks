@@ -1,4 +1,9 @@
-import { store, getContext, withSyncEvent } from '@wordpress/interactivity';
+import {
+	store,
+	getContext,
+	withSyncEvent,
+	withScope,
+} from '@wordpress/interactivity';
 import { GRAVITY_FORMS_RENDERER_STORE, MODAL_STORE } from '@shared/consts';
 import { gformHelpers } from './_store/callbacks';
 import { GravityFormsContext } from './_store/types';
@@ -9,7 +14,7 @@ const { state: modalState } = store( MODAL_STORE ) as {
 		isModalOpen?: boolean;
 	};
 };
-store( GRAVITY_FORMS_RENDERER_STORE, {
+const { state } = store( GRAVITY_FORMS_RENDERER_STORE, {
 	state: {
 		get formIsHidden() {
 			const context = getContext< GravityFormsContext >();
@@ -23,6 +28,7 @@ store( GRAVITY_FORMS_RENDERER_STORE, {
 			const context = getContext< GravityFormsContext >();
 			return ! context.hasError;
 		},
+		isLoading: false,
 	},
 	actions: {
 		updateFieldValue( event ) {
@@ -49,43 +55,57 @@ store( GRAVITY_FORMS_RENDERER_STORE, {
 
 		submitForm: withSyncEvent( function* ( event ) {
 			event.preventDefault();
-
+			state.isLoading = true;
 			const context = getContext< GravityFormsContext >();
-			const errors = validateForm( context.form, context.values );
-			context.errors = errors;
+			try {
+				const errors = validateForm( context.form, context.values );
+				context.errors = errors;
 
-			if ( Object.keys( errors ).length > 0 ) {
-				return;
-			}
-
-			const response = yield fetch(
-				`/wp-json/gf/v2/forms/${ context.formId }/submissions`,
-				{
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify( context.values ),
+				if ( Object.keys( errors ).length > 0 ) {
+					return;
 				}
-			);
+				const response = yield fetch(
+					`/wp-json/gf/v2/forms/${ context.formId }/submissions`,
+					{
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify( context.values ),
+					}
+				);
 
-			if ( ! response.ok ) {
-				context.hasError = true;
-				const data = yield response.json();
-				context.errorMessage = `Unable to submit form. ${ Object.values(
-					data.validation_messages
-				)
-					.map( ( message ) => message )
-					.join( ', ' ) }`;
-				return;
+				if ( ! response.ok ) {
+					context.hasError = true;
+					const data = yield response.json();
+					context.errorMessage = `Unable to submit form. ${ Object.values(
+						data.validation_messages
+					)
+						.map( ( message ) => message )
+						.join( ', ' ) }`;
+					return;
+				}
+
+				const confirmation = getDefaultConfirmation( context.form );
+
+				context.isSubmitted = true;
+				context.confirmationMessage =
+					confirmation?.message ||
+					'Yakoke (thank you) for contacting us! We will get in touch with you shortly.';
+				setTimeout(
+					withScope( () => {
+						context.isSubmitted = false;
+						context.confirmationMessage = '';
+						context.values = getInitialValuesFromPrefilled(
+							context.form,
+							context.prefilledValues
+						);
+					} ),
+					5000
+				);
+			} finally {
+				state.isLoading = false;
 			}
-
-			const confirmation = getDefaultConfirmation( context.form );
-
-			context.isSubmitted = true;
-			context.confirmationMessage =
-				confirmation?.message ||
-				'Yakoke (thank you) for contacting us! We will get in touch with you shortly.';
 		} ),
 	},
 

@@ -32,9 +32,10 @@ $context = array(
 	'isSubmitted'         => false,
 	'confirmationMessage' => '',
 );
+$block_attributes = get_block_wrapper_attributes( ['data-wp-context' =>  wp_json_encode($context),'data-wp-interactive' => 'cno/gravity-form-renderer','data-wp-watch' => 'callbacks.loadForm', ] );
 ?>
 
-<div <?php echo wp_interactivity_data_wp_context( $context ); ?> data-wp-interactive="cno/gravity-form-renderer" class="cno-gravity-form-renderer" data-wp-watch="callbacks.loadForm">
+<div <?php echo $block_attributes; ?>>
 	<div data-wp-bind--hidden="state.hideLoadingState" aria-live="polite">
 		Loading form…
 	</div>
@@ -49,7 +50,7 @@ $context = array(
 			<?php require __DIR__ . '/_partials/field-router.php'; ?>
 		</template>
 
-		<button type="submit" class="wp-block-button wp-element-button" style="display:block;" data-wp-text="context.form.button.text">
+		<button type="submit" class="wp-block-button wp-element-button" style="display:block;" data-wp-text="context.form.button.text" data-wp-bind--disabled="	state.isLoading">
 			Submit
 		</button>
 	</form>

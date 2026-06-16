@@ -1,0 +1,12 @@
+.wp-block-cno-gravity-form-renderer {
+	& [disabled] {
+		opacity: 0.5;
+		pointer-events: none;
+	}
+
+	button[disabled] {
+		cursor: not-allowed;
+		background-color: #ccc;
+		color: black;
+	}
+}

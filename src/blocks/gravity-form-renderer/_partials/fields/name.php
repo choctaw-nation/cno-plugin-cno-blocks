@@ -7,7 +7,7 @@
  */
 
 ?>
-<fieldset data-wp-bind--hidden="!callbacks.isNameField">
+<fieldset data-wp-bind--hidden="!callbacks.isNameField" data-wp-bind--disabled="state.isLoading">
 	<legend class="form-label has-base-font-size d-flex align-items-center gap-1">
 		<span data-wp-text="context.field.label"></span>
 		<span class="text-danger has-root-font-size" data-wp-bind--hidden="!context.field.isRequired">
