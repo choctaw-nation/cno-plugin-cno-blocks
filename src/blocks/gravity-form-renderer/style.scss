@@ -9,4 +9,12 @@
 		background-color: #ccc;
 		color: black;
 	}
+
+	form {
+		margin-bottom: var(--wp--preset--spacing--base);
+	}
+
+	#recaptcha-notice {
+		font-size: var(--wp--preset--font-size--root);
+	}
 }

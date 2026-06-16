@@ -32,14 +32,20 @@ const { state, actions } = store( GRAVITY_FORMS_RENDERER_STORE, {
 		isLoading: false,
 	},
 	actions: {
-		resetForm() {
+		resetForm( keepValues = false ) {
 			const context = getContext< GravityFormsContext >();
 			context.isSubmitted = false;
 			context.confirmationMessage = '';
-			context.values = getInitialValuesFromPrefilled(
-				context.form,
-				context.prefilledValues
-			);
+			context.hasError = false;
+			context.isLoading = false;
+			context.errorMessage = '';
+			context.errors = {};
+			if ( ! keepValues ) {
+				context.values = getInitialValuesFromPrefilled(
+					context.form,
+					context.prefilledValues
+				);
+			}
 		},
 		updateFieldValue( event ) {
 			const context = getContext< GravityFormsContext >();
@@ -70,7 +76,6 @@ const { state, actions } = store( GRAVITY_FORMS_RENDERER_STORE, {
 			try {
 				const errors = validateForm( context.form, context.values );
 				context.errors = errors;
-
 				if ( Object.keys( errors ).length > 0 ) {
 					return;
 				}
@@ -92,7 +97,15 @@ const { state, actions } = store( GRAVITY_FORMS_RENDERER_STORE, {
 						data.validation_messages
 					)
 						.map( ( message ) => message )
-						.join( ', ' ) }`;
+						.join( ', ' ) } Your form will return in ${
+						context.resetTimer
+					} seconds.`;
+					setTimeout(
+						withScope( () => {
+							actions.resetForm( true );
+						} ),
+						context.resetTimer * 1000
+					);
 					return;
 				}
 

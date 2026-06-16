@@ -60,8 +60,12 @@ $block_attributes = get_block_wrapper_attributes(
 			<?php require __DIR__ . '/_partials/field-router.php'; ?>
 		</template>
 
-		<button type="submit" class="wp-block-button wp-element-button" style="display:block;" data-wp-text="context.form.button.text" data-wp-bind--disabled="	state.isLoading">
+		<button type="submit" class="wp-block-button wp-element-button" style="display:block;" data-wp-text="context.form.button.text" data-wp-bind--disabled="state.isLoading">
 			Submit
 		</button>
 	</form>
+	<p id="recaptcha-notice">This site is protected by reCAPTCHA and the Google
+		<a href="https://policies.google.com/privacy">Privacy Policy</a> and
+		<a href="https://policies.google.com/terms">Terms of Service</a> apply.
+	</p>
 </div>

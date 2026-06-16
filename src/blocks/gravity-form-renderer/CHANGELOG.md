@@ -5,6 +5,8 @@
 ## v1.2.0 - [June 16, 2026]
 
 -   Added: Block has extra attributes to control modal behavior
+-   Added: Recaptcha notice is included by default
+-   Updated: Error handling and validation is handled
 -   Updated: Block is only allowed once per page
 -   Updated: Pre-Filled values text is now a `<Tip>`
 
