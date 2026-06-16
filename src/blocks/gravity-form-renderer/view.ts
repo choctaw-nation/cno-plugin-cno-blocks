@@ -4,7 +4,11 @@ import { gformHelpers } from './_store/callbacks';
 import { GravityFormsContext } from './_store/types';
 import { getFieldName, getNameInputName } from './_store/_utils';
 
-const { state: modalState } = store( MODAL_STORE );
+const { state: modalState } = store( MODAL_STORE ) as {
+	state: {
+		isModalOpen?: boolean;
+	};
+};
 store( GRAVITY_FORMS_RENDERER_STORE, {
 	state: {
 		get formIsHidden() {
@@ -49,6 +53,7 @@ store( GRAVITY_FORMS_RENDERER_STORE, {
 			const context = getContext< GravityFormsContext >();
 			const errors = validateForm( context.form, context.values );
 			context.errors = errors;
+			console.log( errors );
 
 			if ( Object.keys( errors ).length > 0 ) {
 				return;
@@ -67,7 +72,12 @@ store( GRAVITY_FORMS_RENDERER_STORE, {
 
 			if ( ! response.ok ) {
 				context.hasError = true;
-				context.errorMessage = 'Unable to submit form.';
+				const data = yield response.json();
+				context.errorMessage = `Unable to submit form. ${ Object.values(
+					data.validation_messages
+				)
+					.map( ( message ) => message )
+					.join( ', ' ) }`;
 				return;
 			}
 
@@ -76,7 +86,7 @@ store( GRAVITY_FORMS_RENDERER_STORE, {
 			context.isSubmitted = true;
 			context.confirmationMessage =
 				confirmation?.message ||
-				'Thank you. Your submission has been received.';
+				'Yakoke (thank you) for contacting us! We will get in touch with you shortly.';
 		} ),
 	},
 
@@ -104,8 +114,13 @@ store( GRAVITY_FORMS_RENDERER_STORE, {
 				}
 
 				const form = await response.json();
+				console.log( form );
 				context.form = normalizeForm( form );
-				context.values = {};
+				context.values = getInitialValuesFromPrefilled(
+					context.form,
+					context.prefilledValues
+				);
+				console.log( context.values );
 				context.errors = {};
 				context.isLoading = false;
 			} catch ( error ) {
@@ -132,6 +147,59 @@ function normalizeForm( form ) {
 			  } ) )
 			: [],
 	};
+}
+
+function getPrefilledValue(
+	prefilledValues: Record< string, string >,
+	ids: Array< string | number >
+) {
+	for ( const id of ids ) {
+		const value = prefilledValues?.[ `prefill_${ id }` ];
+
+		if ( value !== undefined && value !== null && value !== '' ) {
+			return value;
+		}
+	}
+
+	return undefined;
+}
+
+function getInitialValuesFromPrefilled(
+	form,
+	prefilledValues: Record< string, string >
+) {
+	if ( ! form?.fields?.length || ! prefilledValues ) {
+		return {};
+	}
+
+	const values: Record< string, string > = {};
+
+	form.fields.forEach( ( field ) => {
+		if ( field.type === 'name' && Array.isArray( field.inputs ) ) {
+			field.inputs.forEach( ( input ) => {
+				const prefilledValue = getPrefilledValue( prefilledValues, [
+					input.id,
+					field.id,
+				] );
+
+				if ( prefilledValue !== undefined ) {
+					values[ getNameInputName( input ) ] = prefilledValue;
+				}
+			} );
+
+			return;
+		}
+
+		const prefilledValue = getPrefilledValue( prefilledValues, [
+			field.id,
+		] );
+
+		if ( prefilledValue !== undefined ) {
+			values[ getFieldName( field ) ] = prefilledValue;
+		}
+	} );
+
+	return values;
 }
 
 function validateForm( form, values ) {
@@ -171,12 +239,17 @@ function validateForm( form, values ) {
 	return errors;
 }
 
-function getDefaultConfirmation( form ) {
+function getDefaultConfirmation( form ): { message?: string } | null {
 	if ( ! form.confirmations ) {
 		return null;
 	}
 
-	return Object.values( form.confirmations ).find(
-		( confirmation ) => confirmation.isDefault
+	return (
+		Object.values(
+			form.confirmations as Record<
+				string,
+				{ isDefault?: boolean; message?: string }
+			>
+		).find( ( confirmation ) => confirmation.isDefault ) || null
 	);
 }

@@ -7,11 +7,23 @@
  * @var array $attributes Block attributes.
  */
 
-$form_id = isset( $attributes['formId'] ) ? absint( $attributes['formId'] ) : 0;
+$form_id          = isset( $attributes['formId'] ) ? absint( $attributes['formId'] ) : 0;
+$prefilled_values = array();
+
+if ( isset( $attributes['prefilledValues'] ) && is_array( $attributes['prefilledValues'] ) ) {
+	foreach ( $attributes['prefilledValues'] as $prefill_key => $prefill_value ) {
+		if ( ! is_scalar( $prefill_value ) ) {
+			continue;
+		}
+
+		$prefilled_values[ sanitize_key( (string) $prefill_key ) ] = sanitize_text_field( (string) $prefill_value );
+	}
+}
 
 $context = array(
 	'formId'              => $form_id,
 	'form'                => null,
+	'prefilledValues'     => $prefilled_values,
 	'values'              => array(),
 	'errors'              => array(),
 	'isLoading'           => true,

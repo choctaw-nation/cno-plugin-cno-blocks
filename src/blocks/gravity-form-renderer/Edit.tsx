@@ -4,58 +4,19 @@ import {
 	PanelRow,
 	SelectControl,
 	TextControl,
+	Notice,
 } from '@wordpress/components';
-import { useState, useEffect } from '@wordpress/element';
+
+import useGravityForm from './hooks/useGravityForm';
 
 export default function Edit( { attributes, setAttributes } ) {
 	const blockProps = useBlockProps();
-	const [ isLoadingValues, setIsLoadingValues ] = useState( false );
-	const [ options, setOptions ] = useState<
-		{ label: string; value: number }[]
-	>( [] );
 	const { formTitle, formId } = attributes;
-	const [ preFillableFields, setPreFillableFields ] = useState( [] );
+	const { isLoading, options, preFillableFields, errors } = useGravityForm(
+		formId,
+		attributes
+	);
 
-	useEffect( () => {
-		// Fetch available Gravity Forms from the REST API
-		fetch( '/wp-json/gf/v2/forms' )
-			.then( ( response ) => response.json() )
-			.then( ( data ) => {
-				const options = Object.entries( data ).map(
-					( [ , form ] ) => ( {
-						label: form.title,
-						value: +form.id,
-					} )
-				);
-				setOptions( options );
-			} )
-			.catch( ( error ) => {
-				// eslint-disable-next-line no-console
-				console.error( 'Error fetching Gravity Forms:', error );
-			} );
-	}, [] );
-
-	useEffect( () => {
-		if ( ! formId ) {
-			return;
-		}
-		setIsLoadingValues( true );
-		fetch( `/wp-json/gf/v2/forms?include[]=${ formId }` )
-			.then( ( response ) => response.json() )
-			.then( ( data ) => {
-				const { fields } = data[ formId ] || {};
-				const preFillableFields = fields.filter(
-					( field ) => field.allowsPrepopulate
-				);
-				setPreFillableFields( preFillableFields );
-			} )
-			.catch( ( error ) => {
-				// eslint-disable-next-line no-console
-				console.error( 'Error fetching Gravity Forms:', error );
-			} )
-			.finally( () => setIsLoadingValues( false ) );
-	}, [ formId ] );
-	console.log( attributes.preFilledValues );
 	return (
 		<>
 			<InspectorControls>
@@ -82,13 +43,18 @@ export default function Edit( { attributes, setAttributes } ) {
 						/>
 					</PanelRow>
 				</PanelBody>
-				{ ! isLoadingValues && preFillableFields.length > 0 && (
+				{ ! isLoading && preFillableFields.length > 0 && (
 					<PanelBody
 						title="Gravity Form Pre-Filled Values"
 						initialOpen={ true }
 					>
+						{ errors.length > 0 && (
+							<Notice status="error" isDismissible={ false }>
+								{ errors[ 0 ] }
+							</Notice>
+						) }
 						<p>
-							Fields that are marked as "pre-fillable" can be
+							Fields that are marked as “pre-fillable” can be
 							automatically populated with values.
 						</p>
 						{ preFillableFields.map( ( field ) => (
@@ -126,7 +92,14 @@ export default function Edit( { attributes, setAttributes } ) {
 					</PanelBody>
 				) }
 			</InspectorControls>
-			<div { ...blockProps }>{ formTitle } (Gravity Form)</div>
+			<div { ...blockProps }>
+				{ formTitle } (Gravity Form)
+				{ errors.length > 0 && (
+					<Notice status="error" isDismissible={ false }>
+						{ errors[ 0 ] }
+					</Notice>
+				) }
+			</div>
 		</>
 	);
 }

@@ -51,7 +51,8 @@ class Gravity_Forms_Parser {
 			}
 		}
 
-		$parsed_data['fields'] = self::parse_fields( $data['fields'] ?? array() );
+		$parsed_data['fields']        = self::parse_fields( $data['fields'] ?? array() );
+		$parsed_data['confirmations'] = self::parse_confirmations( $data['confirmations'] ?? array() );
 
 		return $parsed_data;
 	}
@@ -114,5 +115,29 @@ class Gravity_Forms_Parser {
 				return null !== $value && '' !== $value && array() !== $value;
 			}
 		);
+	}
+
+	/**
+	 * Parse Gravity Forms confirmations into a format suitable for block consumption.
+	 *
+	 * @param array $confirmations The raw confirmations data from Gravity Forms.
+	 * @return array The parsed confirmations data.
+	 */
+	private static function parse_confirmations( array $confirmations ): array {
+		$parsed_confirmations = array();
+
+		foreach ( $confirmations as $confirmation ) {
+			$parsed_confirmations[] = array(
+				'id'        => $confirmation['id'] ?? null,
+				'name'      => $confirmation['name'] ?? '',
+				'type'      => $confirmation['type'] ?? '',
+				'message'   => $confirmation['message'] ?? '',
+				'url'       => $confirmation['url'] ?? '',
+				'pageId'    => $confirmation['pageId'] ?? null,
+				'isDefault' => isset( $confirmation['isDefault'] ) ? (bool) $confirmation['isDefault'] : false,
+			);
+		}
+
+		return $parsed_confirmations;
 	}
 }

@@ -2,7 +2,7 @@
 
 ## v2.1.0 - [June 15, 2026]
 
--   Added: Services Contact Form Block
+-   Updated: Gravity Form Renderer block now bumped to v1.1.0 and supports the Services contact form
 
 ## v2.0.1 - [June 15, 2026]
 
