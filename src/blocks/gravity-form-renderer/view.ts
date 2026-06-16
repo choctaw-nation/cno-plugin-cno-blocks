@@ -53,7 +53,6 @@ store( GRAVITY_FORMS_RENDERER_STORE, {
 			const context = getContext< GravityFormsContext >();
 			const errors = validateForm( context.form, context.values );
 			context.errors = errors;
-			console.log( errors );
 
 			if ( Object.keys( errors ).length > 0 ) {
 				return;
@@ -114,13 +113,11 @@ store( GRAVITY_FORMS_RENDERER_STORE, {
 				}
 
 				const form = await response.json();
-				console.log( form );
 				context.form = normalizeForm( form );
 				context.values = getInitialValuesFromPrefilled(
 					context.form,
 					context.prefilledValues
 				);
-				console.log( context.values );
 				context.errors = {};
 				context.isLoading = false;
 			} catch ( error ) {
