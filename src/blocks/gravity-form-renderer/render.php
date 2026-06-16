@@ -20,7 +20,7 @@ if ( isset( $attributes['prefilledValues'] ) && is_array( $attributes['prefilled
 	}
 }
 
-$context = array(
+$context          = array(
 	'formId'              => $form_id,
 	'form'                => null,
 	'prefilledValues'     => $prefilled_values,
@@ -32,7 +32,13 @@ $context = array(
 	'isSubmitted'         => false,
 	'confirmationMessage' => '',
 );
-$block_attributes = get_block_wrapper_attributes( ['data-wp-context' =>  wp_json_encode($context),'data-wp-interactive' => 'cno/gravity-form-renderer','data-wp-watch' => 'callbacks.loadForm', ] );
+$block_attributes = get_block_wrapper_attributes(
+	array(
+		'data-wp-context'     => wp_json_encode( $context ),
+		'data-wp-interactive' => 'cno/gravity-form-renderer',
+		'data-wp-watch'       => 'callbacks.loadForm',
+	)
+);
 ?>
 
 <div <?php echo $block_attributes; ?>>
