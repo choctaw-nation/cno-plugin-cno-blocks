@@ -2,6 +2,10 @@
 
 [View the readme](/src/blocks/gravity-form-renderer/README.md)
 
+## v1.2.1 - [June 16, 2026]
+
+-   Fixed: Properly handling recpatcha v3
+
 ## v1.2.0 - [June 16, 2026]
 
 -   Added: Block has extra attributes to control modal behavior

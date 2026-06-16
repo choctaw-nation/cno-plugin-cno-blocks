@@ -79,6 +79,28 @@ const { state, actions } = store( GRAVITY_FORMS_RENDERER_STORE, {
 				if ( Object.keys( errors ).length > 0 ) {
 					return;
 				}
+				const payload: Record< string, string > = {};
+
+				for ( const [ inputName, value ] of Object.entries(
+					context.values
+				) ) {
+					payload[ inputName ] = String( value ?? '' );
+				}
+
+				const recaptchaToken = yield getRecaptchaToken( context.form );
+
+				if ( ! recaptchaToken ) {
+					context.hasError = true;
+					context.errorMessage =
+						'reCAPTCHA verification failed. Please try again.';
+					return;
+				}
+
+				if ( recaptchaToken && context.form.recaptcha?.inputName ) {
+					payload[ context.form.recaptcha.inputName ] =
+						recaptchaToken;
+				}
+
 				const response = yield fetch(
 					`/wp-json/gf/v2/forms/${ context.formId }/submissions`,
 					{
@@ -86,7 +108,7 @@ const { state, actions } = store( GRAVITY_FORMS_RENDERER_STORE, {
 						headers: {
 							'Content-Type': 'application/json',
 						},
-						body: JSON.stringify( context.values ),
+						body: JSON.stringify( payload ),
 					}
 				);
 
@@ -303,4 +325,27 @@ function getDefaultConfirmation( form ): { message?: string } | null {
 			>
 		).find( ( confirmation ) => confirmation.isDefault ) || null
 	);
+}
+
+async function getRecaptchaToken(
+	form: GravityForm
+): Promise< string | null > {
+	if ( ! form.recaptcha?.siteKey || ! form.recaptcha?.inputName ) {
+		throw new Error( 'reCAPTCHA site key or input name is missing.' );
+	}
+
+	if ( ! window.grecaptcha ) {
+		throw new Error( 'reCAPTCHA is not available.' );
+	}
+
+	return new Promise( ( resolve, reject ) => {
+		window.grecaptcha.ready( () => {
+			window.grecaptcha
+				.execute( form.recaptcha!.siteKey, {
+					action: form.recaptcha!.action || 'gravityforms_submit',
+				} )
+				.then( resolve )
+				.catch( reject );
+		} );
+	} );
 }

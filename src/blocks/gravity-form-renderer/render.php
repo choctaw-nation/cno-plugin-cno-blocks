@@ -55,6 +55,7 @@ $block_attributes = get_block_wrapper_attributes(
 	<div class="alert alert-success" role="status" data-wp-bind--hidden="!context.isSubmitted" data-wp-text="context.confirmationMessage"></div>
 
 	<form data-wp-bind--hidden="state.formIsHidden" data-wp-on--submit="actions.submitForm" novalidate>
+		<input type="hidden" data-wp-bind--name="context.recaptcha.inputName" value="" data-wp-bind--id="context.recaptcha.inputName" class="gfield_recaptcha_response" />
 		<h2 data-wp-text="context.form.title"></h2>
 		<template data-wp-each--field="context.form.fields" data-wp-each-key="context.field.id">
 			<?php require __DIR__ . '/_partials/field-router.php'; ?>
@@ -64,7 +65,7 @@ $block_attributes = get_block_wrapper_attributes(
 			Submit
 		</button>
 	</form>
-	<p id="recaptcha-notice">This site is protected by reCAPTCHA and the Google
+	<p id="recaptcha-notice" data-wp-bind--hidden="state.hideLoadingState" aria-live="polite">This site is protected by reCAPTCHA and the Google
 		<a href="https://policies.google.com/privacy">Privacy Policy</a> and
 		<a href="https://policies.google.com/terms">Terms of Service</a> apply.
 	</p>

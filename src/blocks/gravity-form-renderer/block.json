@@ -47,5 +47,6 @@
 	"editorScript": "file:./index.tsx",
 	"render": "file:./render.php",
 	"viewStyle": "file:./style-index.css",
-	"viewScriptModule": "file:./view.ts"
+	"viewScriptModule": "file:./view.ts",
+	"viewScript": [ "cno-i11y-google-recaptcha-v3" ]
 }

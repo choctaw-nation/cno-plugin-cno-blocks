@@ -42,6 +42,7 @@ class Plugin_Loader {
 		add_action( 'init', array( $this, 'register_blocks' ) );
 		add_action( 'enqueue_block_editor_assets', array( $this, 'add_editor_scripts' ) );
 		add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_scripts' ) );
 		$this->handle_tabs_blocks();
 	}
 
@@ -116,5 +117,24 @@ class Plugin_Loader {
 				array( 'strategy' => 'defer' )
 			);
 		}
+	}
+
+	/**
+	 * Enqueue frontend scripts for Interactivity Blocks. Priority 90 to ensure it loads after Gravity Forms scripts.
+	 */
+	public function enqueue_frontend_scripts() {
+		$site_key = ( new Jobs\GF_Recaptcha_Helper() )->get_site_key();
+		wp_register_script(
+			'cno-i11y-google-recaptcha-v3',
+			add_query_arg(
+				array(
+					'render' => $site_key,
+				),
+				'https://www.google.com/recaptcha/api.js'
+			),
+			array(),
+			false,
+			array( 'strategy' => 'defer' )
+		);
 	}
 }
