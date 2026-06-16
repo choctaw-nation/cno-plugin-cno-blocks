@@ -49,7 +49,8 @@
 		"innerblocks",
 		"kses",
 		"numberposts",
-		"wpengine"
+		"wpengine",
+		"Yakoke"
 	],
 	"css.format.spaceAroundSelectorSeparator": true,
 	"editor.codeActionsOnSave": {
