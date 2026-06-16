@@ -2,6 +2,12 @@
 
 [View the readme](/src/blocks/gravity-form-renderer/README.md)
 
+## v1.1.1 - [June 16, 2026]
+
+-   Added: Form clears/resets after 5 seconds
+-   Fixed: Added `isSubmitting` state to form + styles
+-   Fixed: Properly added block attributes to the container
+
 ## v1.1.0
 
 -   Added: Block supports pre-filled values
