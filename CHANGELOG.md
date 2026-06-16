@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.2.0 - [June 16, 2026]
+
+-   Block Updates: [Gravity Form Renderer](src/blocks/gravity-form-renderer/CHANGELOG.md),[Modal](src/blocks/modal/CHANGELOG.md)
+
 ## v2.1.1 - [June 16, 2026]
 
 -   Fixes to [Gravity Form Renderer Block (now v1.1.1)](src/blocks/gravity-form-renderer/CHANGELOG.md)

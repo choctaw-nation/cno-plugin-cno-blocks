@@ -2,6 +2,12 @@
 
 [View the readme](/src/blocks/gravity-form-renderer/README.md)
 
+## v1.2.0 - [June 16, 2026]
+
+-   Added: Block has extra attributes to control modal behavior
+-   Updated: Block is only allowed once per page
+-   Updated: Pre-Filled values text is now a `<Tip>`
+
 ## v1.1.1 - [June 16, 2026]
 
 -   Added: Form clears/resets after 5 seconds

@@ -1,7 +1,7 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"version": "1.1.1",
+	"version": "1.2.0",
 	"name": "cno/gravity-form-renderer",
 	"title": "Gravity Form Renderer",
 	"icon": "block-default",
@@ -10,7 +10,8 @@
 	"ancestor": [ "cno/modal" ],
 	"supports": {
 		"html": false,
-		"interactivity": true
+		"interactivity": true,
+		"multiple": false
 	},
 	"attributes": {
 		"formId": {
@@ -24,6 +25,23 @@
 		"prefilledValues": {
 			"type": "object",
 			"default": {}
+		},
+		"closeModalOnSubmit": {
+			"type": "boolean",
+			"default": true
+		},
+		"closeModalOnSubmitDelay": {
+			"type": "number",
+			"default": 5
+		},
+		"resetFormOnClose": {
+			"type": "string",
+			"enum": [ "always", "onlyAfterSuccessfulSubmit", "never" ],
+			"default": "onlyAfterSuccessfulSubmit"
+		},
+		"resetTimer": {
+			"type": "number",
+			"default": 5
 		}
 	},
 	"editorScript": "file:./index.tsx",

@@ -14,7 +14,8 @@ const { state: modalState } = store( MODAL_STORE ) as {
 		isModalOpen?: boolean;
 	};
 };
-const { state } = store( GRAVITY_FORMS_RENDERER_STORE, {
+
+const { state, actions } = store( GRAVITY_FORMS_RENDERER_STORE, {
 	state: {
 		get formIsHidden() {
 			const context = getContext< GravityFormsContext >();
@@ -31,6 +32,15 @@ const { state } = store( GRAVITY_FORMS_RENDERER_STORE, {
 		isLoading: false,
 	},
 	actions: {
+		resetForm() {
+			const context = getContext< GravityFormsContext >();
+			context.isSubmitted = false;
+			context.confirmationMessage = '';
+			context.values = getInitialValuesFromPrefilled(
+				context.form,
+				context.prefilledValues
+			);
+		},
 		updateFieldValue( event ) {
 			const context = getContext< GravityFormsContext >();
 			const field = context.field;
@@ -92,17 +102,25 @@ const { state } = store( GRAVITY_FORMS_RENDERER_STORE, {
 				context.confirmationMessage =
 					confirmation?.message ||
 					'Yakoke (thank you) for contacting us! We will get in touch with you shortly.';
-				setTimeout(
-					withScope( () => {
-						context.isSubmitted = false;
-						context.confirmationMessage = '';
-						context.values = getInitialValuesFromPrefilled(
-							context.form,
-							context.prefilledValues
-						);
-					} ),
-					5000
-				);
+				if ( context.closeOnSubmit ) {
+					setTimeout(
+						withScope( () => {
+							modalState.isModalOpen = false;
+							if ( context.resetOnClose === 'always' ) {
+								actions.resetForm();
+							}
+						} ),
+						context.closeModalOnSubmitDelay * 1000
+					);
+				}
+				if ( context.resetOnClose === 'onlyAfterSuccessfulSubmit' ) {
+					setTimeout(
+						withScope( () => {
+							actions.resetForm();
+						} ),
+						context.resetTimer * 1000
+					);
+				}
 			} finally {
 				state.isLoading = false;
 			}
@@ -111,10 +129,13 @@ const { state } = store( GRAVITY_FORMS_RENDERER_STORE, {
 
 	callbacks: {
 		async loadForm() {
+			const context = getContext< GravityFormsContext >();
 			if ( ! modalState.isModalOpen ) {
+				if ( context.resetOnClose === 'always' ) {
+					actions.resetForm();
+				}
 				return;
 			}
-			const context = getContext< GravityFormsContext >();
 
 			if ( ! context.formId ) {
 				context.isLoading = false;

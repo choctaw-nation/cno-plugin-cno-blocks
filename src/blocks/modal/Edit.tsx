@@ -2,12 +2,25 @@ import {
 	InnerBlocks,
 	useBlockProps,
 	InspectorControls,
+	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, Tip, ToggleControl } from '@wordpress/components';
+import { PanelBody, PanelRow, Tip } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
 
-export default function Edit( { attributes, setAttributes } ) {
-	const { showInternals } = attributes;
+export default function Edit( { clientId } ) {
+	const isActive = useSelect(
+		( select ) => {
+			const { isBlockSelected, hasSelectedInnerBlock } =
+				select( blockEditorStore );
+
+			return (
+				isBlockSelected( clientId ) ||
+				hasSelectedInnerBlock( clientId, true )
+			);
+		},
+		[ clientId ]
+	);
 	const blockProps = useBlockProps( {
 		style: {
 			border: '1px dashed #333333',
@@ -19,18 +32,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title="Meta Settings" initialOpen={ true }>
-					<PanelRow>
-						<ToggleControl
-							__nextHasNoMarginBottom
-							label="Show Internals"
-							checked={ showInternals }
-							onChange={ ( value ) =>
-								setAttributes( { showInternals: value } )
-							}
-							help="Toggle the visibility of the modal's Inner Blocks in the editor."
-						/>
-					</PanelRow>
+				<PanelBody title="Modal Settings" initialOpen={ true }>
 					<PanelRow>
 						<Tip>
 							Modal settings like closing on backdrop click and
@@ -46,11 +48,12 @@ export default function Edit( { attributes, setAttributes } ) {
 						fontSize: 'var(--wp--preset--font-size--sm)',
 						fontFamily: 'var(--wp--preset--font-family--body)',
 						color: '#333',
+						margin: 0,
 					} }
 				>
-					Modal Contents
+					Modal { isActive && 'Contents' }
 				</h3>
-				{ showInternals && <InnerBlocks /> }
+				{ isActive && <InnerBlocks /> }
 			</div>
 		</Fragment>
 	);

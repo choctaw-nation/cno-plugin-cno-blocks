@@ -21,16 +21,20 @@ if ( isset( $attributes['prefilledValues'] ) && is_array( $attributes['prefilled
 }
 
 $context          = array(
-	'formId'              => $form_id,
-	'form'                => null,
-	'prefilledValues'     => $prefilled_values,
-	'values'              => array(),
-	'errors'              => array(),
-	'isLoading'           => true,
-	'hasError'            => false,
-	'errorMessage'        => '',
-	'isSubmitted'         => false,
-	'confirmationMessage' => '',
+	'formId'                  => $form_id,
+	'form'                    => null,
+	'prefilledValues'         => $prefilled_values,
+	'values'                  => array(),
+	'errors'                  => array(),
+	'isLoading'               => true,
+	'hasError'                => false,
+	'errorMessage'            => '',
+	'isSubmitted'             => false,
+	'confirmationMessage'     => '',
+	'closeOnSubmit'           => $attributes['closeOnSubmit'] ?? true,
+	'resetOnClose'            => $attributes['resetOnClose'] ?? 'onlyAfterSuccessfulSubmit',
+	'resetTimer'              => absint( $attributes['resetTimer'] ) ?? 5,
+	'closeModalOnSubmitDelay' => absint( $attributes['closeModalOnSubmitDelay'] ) ?? 5,
 );
 $block_attributes = get_block_wrapper_attributes(
 	array(

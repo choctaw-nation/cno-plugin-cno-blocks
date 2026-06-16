@@ -11,4 +11,8 @@ export type GravityFormsContext = {
 	errorMessage: string;
 	isSubmitted: boolean;
 	confirmationMessage: string;
+	resetOnClose: 'always' | 'onlyAfterSuccessfulSubmit' | 'never';
+	resetTimer: number;
+	closeOnSubmit: boolean;
+	closeModalOnSubmitDelay: number;
 };

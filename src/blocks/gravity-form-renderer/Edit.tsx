@@ -5,11 +5,14 @@ import {
 	SelectControl,
 	TextControl,
 	Notice,
+	Tip,
 } from '@wordpress/components';
 
 import useGravityForm from './hooks/useGravityForm';
+import ModalControls from './editorComponents/ModalControls';
 
-export default function Edit( { attributes, setAttributes } ) {
+export default function Edit( props ) {
+	const { attributes, setAttributes } = props;
 	const blockProps = useBlockProps();
 	const { formTitle, formId } = attributes;
 	const { isLoading, options, preFillableFields, errors } = useGravityForm(
@@ -53,15 +56,15 @@ export default function Edit( { attributes, setAttributes } ) {
 								{ errors[ 0 ] }
 							</Notice>
 						) }
-						<p>
+						<Tip>
 							Fields that are marked as “pre-fillable” can be
 							automatically populated with values.
-						</p>
+						</Tip>
 						{ preFillableFields.map( ( field ) => (
 							<div
 								style={ {
 									flex: '1 1 100%',
-									marginBottom: '1rem',
+									marginBlock: '1rem',
 								} }
 								key={ field.id }
 							>
@@ -91,6 +94,7 @@ export default function Edit( { attributes, setAttributes } ) {
 						) ) }
 					</PanelBody>
 				) }
+				<ModalControls { ...props } />
 			</InspectorControls>
 			<div { ...blockProps }>
 				{ formTitle } (Gravity Form)
