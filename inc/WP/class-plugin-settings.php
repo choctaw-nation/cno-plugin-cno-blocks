@@ -16,10 +16,15 @@ class Plugin_Settings {
 	/**
 	 * Get the current plugin settings from the WordPress options table.
 	 *
-	 * @return array The current settings, or defaults if not set.
+	 * @param string $key Optional specific setting key to retrieve.
+	 * @return mixed The specified setting, the current settings, or defaults if not set.
 	 */
-	public function get_settings(): array {
-		return get_option( self::OPTION_KEY, $this->get_defaults() );
+	public function get_settings(string $key = '') {
+		$settings = get_option( self::OPTION_KEY, $this->get_defaults() );
+		if ( $key && isset( $settings[ $key ] ) ) {
+			return $settings[ $key ];
+		}
+		return $settings;
 	}
 
 	/**
