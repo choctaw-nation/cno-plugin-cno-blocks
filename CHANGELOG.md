@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.3.0 - [June 17, 2026]
+
+-   Added: Admin Screen for necessary keys/settings
+
 ## v2.2.0 - [June 16, 2026]
 
 -   Block Updates: [Gravity Form Renderer](src/blocks/gravity-form-renderer/CHANGELOG.md),[Modal](src/blocks/modal/CHANGELOG.md)
