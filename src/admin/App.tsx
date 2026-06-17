@@ -2,15 +2,8 @@ import { Button, Panel, TextControl } from '@wordpress/components';
 import useSettings from './useSettings';
 
 export function App() {
-	const {
-		settings,
-		isLoading,
-		isSaving,
-		notice,
-		setSettings,
-		handleSubmit,
-		setNotice,
-	} = useSettings();
+	const { settings, isLoading, isSaving, setSettings, handleSubmit } =
+		useSettings();
 	return (
 		<div className="wrap">
 			<Panel header="Blocks Settings">

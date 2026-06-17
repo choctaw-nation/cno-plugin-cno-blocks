@@ -19,7 +19,7 @@ class Plugin_Settings {
 	 * @param string $key Optional specific setting key to retrieve.
 	 * @return mixed The specified setting, the current settings, or defaults if not set.
 	 */
-	public function get_settings(string $key = '') {
+	public function get_settings( string $key = '' ) {
 		$settings = get_option( self::OPTION_KEY, $this->get_defaults() );
 		if ( $key && isset( $settings[ $key ] ) ) {
 			return $settings[ $key ];
