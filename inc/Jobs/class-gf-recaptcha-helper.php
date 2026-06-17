@@ -9,6 +9,9 @@ namespace ChoctawNation\CNO_Blocks\Jobs;
 
 use Gravity_Forms\Gravity_Forms_RECAPTCHA\GF_Field_RECAPTCHA;
 
+/**
+ * Helper class for retrieving reCAPTCHA configuration from Gravity Forms settings and providing it in a format suitable for use in the CNO Blocks.
+ */
 class GF_Recaptcha_Helper {
 	/**
 	 * Instance of the GF_Field_RECAPTCHA class, if available.
@@ -39,7 +42,7 @@ class GF_Recaptcha_Helper {
 		try {
 			return $this->lookup_site_key();
 		} catch ( \Exception $e ) {
-			error_log( 'Error retrieving reCAPTCHA site key: ' . $e->getMessage() );
+			error_log( 'Error retrieving reCAPTCHA site key: ' . $e->getMessage() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			return null;
 		}
 	}
