@@ -25,6 +25,13 @@ class Plugin_Loader {
 	private string $dir_url;
 
 	/**
+	 * Plugin Settings instance
+	 *
+	 * @var WP\Plugin_Settings $settings
+	 */
+	private WP\Plugin_Settings $settings;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $dir_path The directory path of the plugin
@@ -33,6 +40,7 @@ class Plugin_Loader {
 	public function __construct( string $dir_path, string $dir_url ) {
 		$this->dir_path = $dir_path;
 		$this->dir_url  = $dir_url;
+		$this->settings = new WP\Plugin_Settings();
 	}
 
 	/**
@@ -43,6 +51,7 @@ class Plugin_Loader {
 		add_action( 'enqueue_block_editor_assets', array( $this, 'add_editor_scripts' ) );
 		add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
 		$this->handle_tabs_blocks();
+		$this->add_admin_screen();
 	}
 
 	/**
@@ -53,6 +62,8 @@ class Plugin_Loader {
 		$i11y_rest_router->register_routes();
 		$acf_rest_router = new Routes\ACF_Rest_Router();
 		$acf_rest_router->register_routes();
+		$admin_rest_router = new Routes\Admin_Rest_Router( $this->dir_path, $this->dir_url, $this->settings );
+		$admin_rest_router->register_routes();
 	}
 
 	/**
@@ -71,7 +82,8 @@ class Plugin_Loader {
 	 * @return void
 	 */
 	public function activate(): void {
-		// nothing to do here
+		$this->settings->register();
+		$this->settings->initialize_defaults();
 	}
 
 	/**
@@ -116,5 +128,14 @@ class Plugin_Loader {
 				array( 'strategy' => 'defer' )
 			);
 		}
+	}
+
+	/**
+	 * Add Admin Screen for the plugin
+	 */
+	private function add_admin_screen(): void {
+		$admin_screen = new WP\Admin_Screen( $this->dir_path, $this->dir_url );
+		add_action( 'admin_menu', array( $admin_screen, 'add_admin_menu' ) );
+		add_action( 'admin_enqueue_scripts', array( $admin_screen, 'enqueue_admin_assets' ) );
 	}
 }

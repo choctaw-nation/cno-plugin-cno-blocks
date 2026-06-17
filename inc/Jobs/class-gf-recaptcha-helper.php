@@ -7,6 +7,7 @@
 
 namespace ChoctawNation\CNO_Blocks\Jobs;
 
+use ChoctawNation\CNO_Blocks\WP\Plugin_Settings;
 use Gravity_Forms\Gravity_Forms_RECAPTCHA\GF_Field_RECAPTCHA;
 
 /**
@@ -51,7 +52,7 @@ class GF_Recaptcha_Helper {
 	 * Retrieves the reCAPTCHA site key from the Gravity Forms settings or from a custom option.
 	 */
 	private function lookup_site_key(): ?string {
-		$site_key = get_option( self::SITE_KEY_OPTION_NAME, null );
+		$site_key = get_option( Plugin_Settings::OPTION_KEY )['siteKey'] ?? null;
 		if ( $site_key ) {
 			return $site_key;
 		}
