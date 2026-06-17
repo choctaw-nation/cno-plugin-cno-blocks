@@ -41,6 +41,10 @@ const addEditorEntry = ( webpackConfig ) => {
 					__dirname,
 					'./src/editor/insertModalBlock.ts'
 				),
+				'admin/cno-site-blocks-admin': path.resolve(
+					__dirname,
+					'./src/admin/index.tsx'
+				),
 			};
 		},
 	};

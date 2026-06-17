@@ -2,6 +2,21 @@ import { getContext } from '@wordpress/interactivity';
 import { GravityFormsContext } from './types';
 import { getFieldName, getNameInputName } from './_utils';
 
+function getPrefilledValue(
+	prefilledValues: Record< string, string >,
+	ids: Array< string | number >
+) {
+	for ( const id of ids ) {
+		const value = prefilledValues?.[ `preFill_${ id }` ];
+
+		if ( value !== undefined && value !== null && value !== '' ) {
+			return value;
+		}
+	}
+
+	return '';
+}
+
 export const gformHelpers = {
 	isNameField() {
 		return getContext< GravityFormsContext >().field.type === 'name';
@@ -9,7 +24,7 @@ export const gformHelpers = {
 
 	isHiddenField() {
 		return (
-			getContext< GravityFormsContext >().field.visibility === 'hidden'
+			getContext< GravityFormsContext >().field.visibility !== 'visible'
 		);
 	},
 
@@ -34,8 +49,20 @@ export const gformHelpers = {
 
 	nameInputValue() {
 		const context = getContext< GravityFormsContext >();
+		const inputName = getNameInputName( context.input );
 
-		return context.values[ getNameInputName( context.input ) ] || '';
+		if ( context.values[ inputName ] !== undefined ) {
+			return context.values[ inputName ];
+		}
+
+		return getPrefilledValue( context.prefilledValues, [
+			context.input.id,
+			context.field.id,
+		] );
+	},
+
+	prefilledNameInputValue() {
+		return gformHelpers.nameInputValue();
 	},
 
 	nameInputAutocomplete() {
@@ -87,8 +114,19 @@ export const gformHelpers = {
 
 	fieldValue() {
 		const context = getContext< GravityFormsContext >();
+		const fieldName = getFieldName( context.field );
 
-		return context.values[ getFieldName( context.field ) ] || '';
+		if ( context.values[ fieldName ] !== undefined ) {
+			return context.values[ fieldName ];
+		}
+
+		return getPrefilledValue( context.prefilledValues, [
+			context.field.id,
+		] );
+	},
+
+	prefilledFieldValue() {
+		return gformHelpers.fieldValue();
 	},
 
 	fieldError() {

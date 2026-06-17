@@ -18,14 +18,14 @@
 	</label>
 
 	<input class="form-control" data-wp-bind--id="callbacks.fieldInputId" data-wp-bind--name="callbacks.fieldName" data-wp-bind--type="callbacks.inputType"
-		data-wp-bind--hidden="callbacks.isTextareaField" data-wp-bind--required="context.field.isRequired" data-wp-bind--value="callbacks.fieldValue"
-		data-wp-bind--aria-invalid="callbacks.hasFieldError" data-wp-bind--autocomplete="callbacks.autocompleteValue" data-wp-bind--aria-describedby="callbacks.fieldErrorId"
-		data-wp-on--input="actions.updateFieldValue" data-wp-class--is-invalid="callbacks.hasFieldError" />
+		data-wp-bind--disabled="state.isLoading" data-wp-bind--hidden="callbacks.isTextareaField" data-wp-bind--required="context.field.isRequired"
+		data-wp-bind--value="callbacks.prefilledFieldValue" data-wp-bind--aria-invalid="callbacks.hasFieldError" data-wp-bind--autocomplete="callbacks.autocompleteValue"
+		data-wp-bind--aria-describedby="callbacks.fieldErrorId" data-wp-on--input="actions.updateFieldValue" data-wp-class--is-invalid="callbacks.hasFieldError" />
 
 	<textarea class="form-control" rows="5" data-wp-bind--id="callbacks.fieldInputId" data-wp-bind--name="callbacks.fieldName" data-wp-bind--required="context.field.isRequired"
-		data-wp-bind--hidden="!callbacks.isTextareaField" data-wp-bind--value="callbacks.fieldValue" data-wp-bind--maxlength="context.field.maxLength"
-		data-wp-bind--aria-invalid="callbacks.hasFieldError" data-wp-bind--aria-describedby="callbacks.fieldErrorId" data-wp-on--input="actions.updateFieldValue"
-		data-wp-class--is-invalid="callbacks.hasFieldError"></textarea>
+		data-wp-bind--disabled="state.isLoading" data-wp-bind--hidden="!callbacks.isTextareaField" data-wp-bind--value="callbacks.prefilledFieldValue"
+		data-wp-bind--maxlength="context.field.maxLength" data-wp-bind--aria-invalid="callbacks.hasFieldError" data-wp-bind--aria-describedby="callbacks.fieldErrorId"
+		data-wp-on--input="actions.updateFieldValue" data-wp-class--is-invalid="callbacks.hasFieldError"></textarea>
 
 	<div class="invalid-feedback" data-wp-bind--id="callbacks.fieldErrorId" data-wp-bind--hidden="!callbacks.hasFieldError" data-wp-text="callbacks.fieldError"></div>
 </div>

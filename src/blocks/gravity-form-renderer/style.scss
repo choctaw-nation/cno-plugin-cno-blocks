@@ -1,0 +1,24 @@
+.wp-block-cno-gravity-form-renderer {
+	& [disabled] {
+		opacity: 0.5;
+		pointer-events: none;
+	}
+
+	button[disabled] {
+		cursor: not-allowed;
+		background-color: #ccc;
+		color: black;
+	}
+
+	form {
+		margin-bottom: var(--wp--preset--spacing--base);
+	}
+
+	#recaptcha-notice {
+		font-size: var(--wp--preset--font-size--root);
+	}
+}
+
+.grecaptcha-badge {
+	visibility: hidden;
+}

@@ -9,6 +9,7 @@
 namespace ChoctawNation\CNO_Blocks\Routes;
 
 use ChoctawNation\CNO_Blocks\Jobs\Gravity_Forms_Parser;
+
 use WP_REST_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -72,6 +73,7 @@ class Interactivity_Rest_Router extends WP_REST_Controller {
 		$form_id   = absint( $request['form_id'] );
 		$cache_key = 'gf_renderer_form_' . $form_id;
 		$data      = get_transient( $cache_key );
+		$data      = false;
 		if ( false !== $data ) {
 			return new WP_REST_Response( $data, 200, array( 'Cache-Control' => 'public, max-age=3600' ) );
 		}
@@ -81,9 +83,13 @@ class Interactivity_Rest_Router extends WP_REST_Controller {
 			if ( ! $form ) {
 				return new WP_REST_Response( array( 'error' => 'Form not found' ), 404 );
 			}
-			$data = Gravity_Forms_Parser::parse( $form );
+			$data             = Gravity_Forms_Parser::parse( $form );
+			$recaptcha_helper = new \ChoctawNation\CNO_Blocks\Jobs\GF_Recaptcha_Helper();
+			$recaptcha        = $recaptcha_helper->get_recaptcha_field_for_form( $form_id );
+			if ( $recaptcha ) {
+				$data['recaptcha'] = $recaptcha;
+			}
 			set_transient( $cache_key, $data, HOUR_IN_SECONDS );
-
 			return new WP_REST_Response( $data, 200, array( 'Cache-Control' => 'public, max-age=3600' ) );
 		} catch ( \Exception $e ) {
 			return new WP_REST_Response( array( 'error' => 'Error retrieving form: ' . $e->getMessage() ), 500 );

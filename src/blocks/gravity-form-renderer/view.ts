@@ -1,11 +1,21 @@
-import { store, getContext, withSyncEvent } from '@wordpress/interactivity';
+import {
+	store,
+	getContext,
+	withSyncEvent,
+	withScope,
+} from '@wordpress/interactivity';
 import { GRAVITY_FORMS_RENDERER_STORE, MODAL_STORE } from '@shared/consts';
 import { gformHelpers } from './_store/callbacks';
 import { GravityFormsContext } from './_store/types';
 import { getFieldName, getNameInputName } from './_store/_utils';
 
-const { state: modalState } = store( MODAL_STORE );
-store( GRAVITY_FORMS_RENDERER_STORE, {
+const { state: modalState } = store( MODAL_STORE ) as {
+	state: {
+		isModalOpen?: boolean;
+	};
+};
+
+const { state, actions } = store( GRAVITY_FORMS_RENDERER_STORE, {
 	state: {
 		get formIsHidden() {
 			const context = getContext< GravityFormsContext >();
@@ -19,8 +29,24 @@ store( GRAVITY_FORMS_RENDERER_STORE, {
 			const context = getContext< GravityFormsContext >();
 			return ! context.hasError;
 		},
+		isLoading: false,
 	},
 	actions: {
+		resetForm( keepValues = false ) {
+			const context = getContext< GravityFormsContext >();
+			context.isSubmitted = false;
+			context.confirmationMessage = '';
+			context.hasError = false;
+			context.isLoading = false;
+			context.errorMessage = '';
+			context.errors = {};
+			if ( ! keepValues ) {
+				context.values = getInitialValuesFromPrefilled(
+					context.form,
+					context.prefilledValues
+				);
+			}
+		},
 		updateFieldValue( event ) {
 			const context = getContext< GravityFormsContext >();
 			const field = context.field;
@@ -45,47 +71,106 @@ store( GRAVITY_FORMS_RENDERER_STORE, {
 
 		submitForm: withSyncEvent( function* ( event ) {
 			event.preventDefault();
-
+			state.isLoading = true;
 			const context = getContext< GravityFormsContext >();
-			const errors = validateForm( context.form, context.values );
-			context.errors = errors;
-
-			if ( Object.keys( errors ).length > 0 ) {
-				return;
-			}
-
-			const response = yield fetch(
-				`/wp-json/gf/v2/forms/${ context.formId }/submissions`,
-				{
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify( context.values ),
+			try {
+				const errors = validateForm( context.form, context.values );
+				context.errors = errors;
+				if ( Object.keys( errors ).length > 0 ) {
+					return;
 				}
-			);
+				const payload: Record< string, string > = {};
 
-			if ( ! response.ok ) {
-				context.hasError = true;
-				context.errorMessage = 'Unable to submit form.';
-				return;
+				for ( const [ inputName, value ] of Object.entries(
+					context.values
+				) ) {
+					payload[ inputName ] = String( value ?? '' );
+				}
+
+				const recaptchaToken = yield getRecaptchaToken( context.form );
+
+				if ( ! recaptchaToken ) {
+					context.hasError = true;
+					context.errorMessage =
+						'reCAPTCHA verification failed. Please try again.';
+					return;
+				}
+
+				if ( recaptchaToken && context.form.recaptcha?.inputName ) {
+					payload[ context.form.recaptcha.inputName ] =
+						recaptchaToken;
+				}
+
+				const response = yield fetch(
+					`/wp-json/gf/v2/forms/${ context.formId }/submissions`,
+					{
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify( payload ),
+					}
+				);
+
+				if ( ! response.ok ) {
+					context.hasError = true;
+					const data = yield response.json();
+					context.errorMessage = `Unable to submit form. ${ Object.values(
+						data.validation_messages
+					)
+						.map( ( message ) => message )
+						.join( ', ' ) } Your form will return in ${
+						context.resetTimer
+					} seconds.`;
+					setTimeout(
+						withScope( () => {
+							actions.resetForm( true );
+						} ),
+						context.resetTimer * 1000
+					);
+					return;
+				}
+
+				const confirmation = getDefaultConfirmation( context.form );
+
+				context.isSubmitted = true;
+				context.confirmationMessage =
+					confirmation?.message ||
+					'Yakoke (thank you) for contacting us! We will get in touch with you shortly.';
+				if ( context.closeOnSubmit ) {
+					setTimeout(
+						withScope( () => {
+							modalState.isModalOpen = false;
+							if ( context.resetOnClose === 'always' ) {
+								actions.resetForm();
+							}
+						} ),
+						context.closeModalOnSubmitDelay * 1000
+					);
+				}
+				if ( context.resetOnClose === 'onlyAfterSuccessfulSubmit' ) {
+					setTimeout(
+						withScope( () => {
+							actions.resetForm();
+						} ),
+						context.resetTimer * 1000
+					);
+				}
+			} finally {
+				state.isLoading = false;
 			}
-
-			const confirmation = getDefaultConfirmation( context.form );
-
-			context.isSubmitted = true;
-			context.confirmationMessage =
-				confirmation?.message ||
-				'Thank you. Your submission has been received.';
 		} ),
 	},
 
 	callbacks: {
 		async loadForm() {
+			const context = getContext< GravityFormsContext >();
 			if ( ! modalState.isModalOpen ) {
+				if ( context.resetOnClose === 'always' ) {
+					actions.resetForm();
+				}
 				return;
 			}
-			const context = getContext< GravityFormsContext >();
 
 			if ( ! context.formId ) {
 				context.isLoading = false;
@@ -104,9 +189,11 @@ store( GRAVITY_FORMS_RENDERER_STORE, {
 				}
 
 				const form = await response.json();
-
 				context.form = normalizeForm( form );
-				context.values = {};
+				context.values = getInitialValuesFromPrefilled(
+					context.form,
+					context.prefilledValues
+				);
 				context.errors = {};
 				context.isLoading = false;
 			} catch ( error ) {
@@ -133,6 +220,59 @@ function normalizeForm( form ) {
 			  } ) )
 			: [],
 	};
+}
+
+function getPrefilledValue(
+	prefilledValues: Record< string, string >,
+	ids: Array< string | number >
+) {
+	for ( const id of ids ) {
+		const value = prefilledValues?.[ `prefill_${ id }` ];
+
+		if ( value !== undefined && value !== null && value !== '' ) {
+			return value;
+		}
+	}
+
+	return undefined;
+}
+
+function getInitialValuesFromPrefilled(
+	form,
+	prefilledValues: Record< string, string >
+) {
+	if ( ! form?.fields?.length || ! prefilledValues ) {
+		return {};
+	}
+
+	const values: Record< string, string > = {};
+
+	form.fields.forEach( ( field ) => {
+		if ( field.type === 'name' && Array.isArray( field.inputs ) ) {
+			field.inputs.forEach( ( input ) => {
+				const prefilledValue = getPrefilledValue( prefilledValues, [
+					input.id,
+					field.id,
+				] );
+
+				if ( prefilledValue !== undefined ) {
+					values[ getNameInputName( input ) ] = prefilledValue;
+				}
+			} );
+
+			return;
+		}
+
+		const prefilledValue = getPrefilledValue( prefilledValues, [
+			field.id,
+		] );
+
+		if ( prefilledValue !== undefined ) {
+			values[ getFieldName( field ) ] = prefilledValue;
+		}
+	} );
+
+	return values;
 }
 
 function validateForm( form, values ) {
@@ -172,12 +312,40 @@ function validateForm( form, values ) {
 	return errors;
 }
 
-function getDefaultConfirmation( form ) {
+function getDefaultConfirmation( form ): { message?: string } | null {
 	if ( ! form.confirmations ) {
 		return null;
 	}
 
-	return Object.values( form.confirmations ).find(
-		( confirmation ) => confirmation.isDefault
+	return (
+		Object.values(
+			form.confirmations as Record<
+				string,
+				{ isDefault?: boolean; message?: string }
+			>
+		).find( ( confirmation ) => confirmation.isDefault ) || null
 	);
+}
+
+async function getRecaptchaToken(
+	form: GravityForm
+): Promise< string | null > {
+	if ( ! form.recaptcha?.siteKey || ! form.recaptcha?.inputName ) {
+		throw new Error( 'reCAPTCHA site key or input name is missing.' );
+	}
+
+	if ( ! window.grecaptcha ) {
+		throw new Error( 'reCAPTCHA is not available.' );
+	}
+
+	return new Promise( ( resolve, reject ) => {
+		window.grecaptcha.ready( () => {
+			window.grecaptcha
+				.execute( form.recaptcha!.siteKey, {
+					action: form.recaptcha!.action || 'gravityforms_submit',
+				} )
+				.then( resolve )
+				.catch( reject );
+		} );
+	} );
 }
