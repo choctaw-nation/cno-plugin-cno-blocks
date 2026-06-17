@@ -49,7 +49,7 @@ class Plugin_Loader {
 	public function load_plugin() {
 		add_action( 'init', array( $this, 'register_blocks' ) );
 		add_action( 'enqueue_block_editor_assets', array( $this, 'add_editor_scripts' ) );
-		add_action('wp_enqueue_scripts', array( $this, 'register_frontend_assets' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'register_frontend_assets' ) );
 		add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
 		$this->handle_tabs_blocks();
 		$this->add_admin_screen();
@@ -131,8 +131,12 @@ class Plugin_Loader {
 		}
 	}
 
+	/**
+	 * Register Frontend Assets (e.g. Google reCAPTCHA script)
+	 * Scripts are only registered so blocks can enqueue them as needed.
+	 */
 	public function register_frontend_assets() {
-		$site_key = $this->settings->get_settings('siteKey');
+		$site_key = $this->settings->get_settings( 'siteKey' );
 		wp_register_script(
 			'cno-i11y-google-recaptcha-v3',
 			add_query_arg(
@@ -142,8 +146,8 @@ class Plugin_Loader {
 				'https://www.google.com/recaptcha/api.js'
 			),
 			array(),
-			false,
-			array( 'strategy' => 'defer' )
+			null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+			array( 'strategy' => 'async' )
 		);
 	}
 
