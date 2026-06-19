@@ -11,7 +11,7 @@ const initialState: ModalState = {
 	allowBodyScrollWhileOpen: false,
 };
 
-const { state, actions, callbacks } = store( MODAL_STORE, {
+const { state, actions } = store( MODAL_STORE, {
 	state: initialState,
 	actions: {
 		/**
