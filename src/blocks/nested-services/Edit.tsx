@@ -36,6 +36,9 @@ export default function Edit() {
 					display: 'flex',
 					alignItems: 'center',
 					gap: '.5rem',
+					color: ! parentIsActive
+						? 'var(--wp--preset--color--primary)'
+						: undefined,
 				} }
 			>
 				{ ! parentIsActive && leftArrow }
@@ -49,15 +52,18 @@ export default function Edit() {
 							display: 'flex',
 							alignItems: 'center',
 							gap: '.5rem',
-							fontWeight: `${
-								child.isActive ? 'bold' : 'normal'
-							}`,
 						} }
+						className={ child.isActive ? 'active' : undefined }
 						key={ child.title }
 					>
 						{ chevronRight }
 						<p
-							style={ { marginBlock: '.25rem' } }
+							style={ {
+								marginBlock: '.25rem',
+								fontWeight: `${
+									child.isActive ? 'bold' : 'normal'
+								}`,
+							} }
 							dangerouslySetInnerHTML={ { __html: child.title } }
 						/>
 					</li>

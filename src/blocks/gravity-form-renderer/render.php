@@ -65,7 +65,7 @@ $block_attributes = get_block_wrapper_attributes(
 			Submit
 		</button>
 	</form>
-	<p id="recaptcha-notice" data-wp-bind--hidden="state.hideLoadingState" aria-live="polite">This site is protected by reCAPTCHA and the Google
+	<p id="recaptcha-notice" data-wp-bind--hidden="state.formIsHidden">This site is protected by reCAPTCHA and the Google
 		<a href="https://policies.google.com/privacy">Privacy Policy</a> and
 		<a href="https://policies.google.com/terms">Terms of Service</a> apply.
 	</p>

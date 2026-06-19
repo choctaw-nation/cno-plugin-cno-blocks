@@ -6,6 +6,7 @@ import metadata from './block.json';
 import Edit from './Edit';
 import './style.scss';
 import { MODAL_STORE } from '@shared/consts';
+import { TriggerContext } from '@shared/modal-store-types';
 
 registerBlockType( metadata.name, {
 	icon: button,
@@ -30,7 +31,7 @@ registerBlockType( metadata.name, {
 				allowBodyScrollWhileOpen,
 				modalTitle,
 				source,
-			} ) }
+			} as TriggerContext ) }
 			data-wp-on--click="actions.openModal"
 			value={ buttonText || 'More Info' }
 		/>

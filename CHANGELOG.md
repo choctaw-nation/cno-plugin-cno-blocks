@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.3.1 - [June 19, 2026]
+
+-   Block Updates:
+    -   [Nested Services](/src/blocks/nested-services/CHANGELOG.md)
+    -   [Gravity Forms Renderer](/src/blocks/gravity-form-renderer/CHANGELOG.md)
+    -   [Modal](src/blocks/modal/CHANGELOG.md)
+
 ## v2.3.0 - [June 17, 2026]
 
 -   Added: Admin Screen for necessary keys/settings
