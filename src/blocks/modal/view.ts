@@ -72,7 +72,7 @@ const { state, actions } = store( MODAL_STORE, {
 					return;
 				}
 			}
-			if ( state.isModalOpen ) {
+			if ( state.isModalOpen && ! state.modal.open ) {
 				state.modal.showModal();
 			} else if ( ! state.isModalOpen && state.modal.open ) {
 				state.modal.close();

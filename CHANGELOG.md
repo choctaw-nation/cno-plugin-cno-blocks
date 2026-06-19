@@ -5,7 +5,7 @@
 -   Block Updates:
     -   [Nested Services](/src/blocks/nested-services/CHANGELOG.md)
     -   [Gravity Forms Renderer](/src/blocks/gravity-form-renderer/CHANGELOG.md)
-    -   [Modal](src/blocks/modal/CHANGELOG.md)
+    -   [Modal](/src/blocks/modal/CHANGELOG.md)
 
 ## v2.3.0 - [June 17, 2026]
 
