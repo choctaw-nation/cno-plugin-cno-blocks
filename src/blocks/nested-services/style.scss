@@ -35,6 +35,8 @@
 	}
 
 	a.parent-title {
+		position: relative;
+
 		@include link-styles;
 	}
 
