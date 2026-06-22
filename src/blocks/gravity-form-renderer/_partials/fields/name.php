@@ -15,7 +15,7 @@
 		</span>
 	</legend>
 
-	<div class="d-flex gap-3">
+	<div class="d-flex column-gap-3 row-gap-2 flex-wrap">
 		<template data-wp-each--input="context.field.inputs" data-wp-each-key="context.input.id">
 			<div class="col-auto flex-grow-1" data-wp-class--d-none="callbacks.isHiddenInput">
 				<div class="invalid-feedback" data-wp-bind--id="callbacks.nameInputErrorId" data-wp-bind--hidden="!callbacks.hasNameInputError" data-wp-text="callbacks.nameInputError"></div>

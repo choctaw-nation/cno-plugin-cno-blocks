@@ -1,3 +1,18 @@
 .wp-block-cno-tab-list {
 	flex-grow: 1;
+
+	&.allow-overflow {
+		overflow-x: auto;
+
+		.alignfull .alignwide & {
+			@media screen and (width <= 782px) {
+				margin-right: calc(var(--wp--style--root--padding-right) * -1);
+				margin-left: calc(var(--wp--style--root--padding-left) * -1);
+			}
+		}
+
+		.wp-block-cno-tab {
+			word-break: normal;
+		}
+	}
 }

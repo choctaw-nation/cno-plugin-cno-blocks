@@ -56,7 +56,6 @@ $block_attributes = get_block_wrapper_attributes(
 
 	<form data-wp-bind--hidden="state.formIsHidden" data-wp-on--submit="actions.submitForm" novalidate>
 		<input type="hidden" data-wp-bind--name="context.recaptcha.inputName" value="" data-wp-bind--id="context.recaptcha.inputName" class="gfield_recaptcha_response" />
-		<h2 data-wp-text="context.form.title"></h2>
 		<template data-wp-each--field="context.form.fields" data-wp-each-key="context.field.id">
 			<?php require __DIR__ . '/_partials/field-router.php'; ?>
 		</template>

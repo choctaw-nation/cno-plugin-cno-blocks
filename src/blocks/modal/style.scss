@@ -3,7 +3,7 @@
 	translate: 0% -50%;
 	border: 0;
 	padding: 0;
-	max-width: var(--bs-modal-width, 500px);
+	max-width: var(--bs-modal-width, min(500px, 80vw));
 
 	@media screen and (width >= 576px) {
 		min-width: 600px;

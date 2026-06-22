@@ -48,5 +48,10 @@ foreach ( $block->parsed_block['innerBlocks'] ?? array() as $parsed_tab ) {
 }
 
 // Rebuild the wrapper using get_block_wrapper_attributes().
-$wrapper_attributes = get_block_wrapper_attributes( array( 'role' => 'tablist' ) );
+$wrapper_attributes = get_block_wrapper_attributes(
+	array(
+		'role'  => 'tablist',
+		'class' => $attributes['allowOverflow'] ? 'allow-overflow' : '',
+	)
+);
 printf( '<div %s>%s</div>', $wrapper_attributes, $buttons_html );
