@@ -19,7 +19,12 @@ const { state, actions } = store( GRAVITY_FORMS_RENDERER_STORE, {
 	state: {
 		get formIsHidden() {
 			const context = getContext< GravityFormsContext >();
-			return context.isLoading || context.hasError || context.isSubmitted;
+			return (
+				context.isLoading ||
+				context.hasError ||
+				context.isSubmitted ||
+				state.isLoading
+			);
 		},
 		get hideLoadingState() {
 			const context = getContext< GravityFormsContext >();

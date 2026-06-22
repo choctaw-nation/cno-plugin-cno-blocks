@@ -2,6 +2,10 @@
 
 [View the readme](/src/blocks/gravity-form-renderer/README.md)
 
+## v1.2.2 - [June 19, 2026]
+
+-   Fixed: reCAPTCHA text visibility is handled correctly
+
 ## v1.2.1 - [June 16, 2026]
 
 -   Fixed: Properly handling recpatcha v3

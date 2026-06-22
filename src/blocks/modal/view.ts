@@ -1,6 +1,6 @@
-import { store, getElement } from '@wordpress/interactivity';
+import { store, getElement, getContext } from '@wordpress/interactivity';
 import { MODAL_STORE } from '@shared/consts';
-import { ModalState } from '@shared/modal-store-types';
+import { ModalState, TriggerContext } from '@shared/modal-store-types';
 
 const initialState: ModalState = {
 	isModalOpen: false,
@@ -8,20 +8,74 @@ const initialState: ModalState = {
 	modalTitle: '',
 	status: null,
 	source: 'innerblocks',
+	allowBodyScrollWhileOpen: false,
 };
-const { state } = store( MODAL_STORE, {
+
+const { state, actions } = store( MODAL_STORE, {
 	state: initialState,
-	callbacks: {
+	actions: {
 		/**
-		 * Add modal el to state on init
+		 * Open the modal in state & with js
 		 */
-		initModal() {
-			const { ref } = getElement();
-			if ( ref ) {
-				state.modal = ref as HTMLDialogElement;
-			} else {
-				// eslint-disable-next-line no-console
-				console.error( 'Modal element not found on init.' );
+		openModal() {
+			state.isModalOpen = true;
+			const {
+				allowBodyScrollWhileOpen,
+				modalTitle,
+				closeWithBackdropClick,
+			} = getContext< TriggerContext >();
+			state.allowBodyScrollWhileOpen = allowBodyScrollWhileOpen;
+			state.closeWithBackdropClick = closeWithBackdropClick;
+			if ( false === allowBodyScrollWhileOpen ) {
+				document.body.style.overflow = 'hidden';
+			}
+			state.modalTitle = modalTitle;
+			if ( 'cnhsa-guidelines' === state.source ) {
+				// callbacks.fetchCNHSAGuidelines();
+			}
+		},
+
+		/**
+		 * Close the modal in state & with js
+		 */
+		closeModal() {
+			state.isModalOpen = false;
+
+			const { allowBodyScrollWhileOpen } = state;
+			if ( false === allowBodyScrollWhileOpen ) {
+				document.body.style.overflow = '';
+			}
+		},
+	},
+	callbacks: {
+		listenForBackdropClick( event: MouseEvent ) {
+			if (
+				! state.closeWithBackdropClick ||
+				! state.isModalOpen ||
+				! state.modal
+			) {
+				return;
+			}
+
+			if ( event.target === state.modal ) {
+				actions.closeModal();
+			}
+		},
+		syncDialog() {
+			if ( ! state.modal ) {
+				const { ref } = getElement();
+				if ( ref ) {
+					state.modal = ref as HTMLDialogElement;
+				} else {
+					// eslint-disable-next-line no-console
+					console.error( 'Modal element not found on init.' );
+					return;
+				}
+			}
+			if ( state.isModalOpen && ! state.modal.open ) {
+				state.modal.showModal();
+			} else if ( ! state.isModalOpen && state.modal.open ) {
+				state.modal.close();
 			}
 		},
 		/**
@@ -29,7 +83,9 @@ const { state } = store( MODAL_STORE, {
 		 */
 		onNativeClose() {
 			state.isModalOpen = false;
-			document.body.style.overflow = '';
+			if ( false === state.allowBodyScrollWhileOpen ) {
+				document.body.style.overflow = '';
+			}
 		},
 
 		/**

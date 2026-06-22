@@ -17,8 +17,8 @@ registerBlockType( metadata.name, {
 				{ ...blockProps }
 				id="cno-modal"
 				data-wp-interactive={ MODAL_STORE }
-				data-wp-init="callbacks.initModal"
 				data-wp-watch="callbacks.syncDialog"
+				data-wp-on--click="callbacks.listenForBackdropClick"
 			>
 				<div className="wp-block-cno-modal__inner">
 					<header className="wp-block-cno-modal__header">

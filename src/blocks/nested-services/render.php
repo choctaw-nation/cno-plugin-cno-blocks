@@ -35,7 +35,7 @@ $block_attributes = get_block_wrapper_attributes();
 	echo '<hr/><ul>';
 	foreach ( $children as $child ) {
 		$is_active = $child->ID === $current_post_id;
-		$markup    = '<li ><i class="fa-solid fa-chevron-right"></i>';
+		$markup    = sprintf( '<li%s><i class="fa-solid fa-chevron-right"></i>', $is_active ? ' class="active"' : '' );
 		$markup   .= $is_active ? sprintf( '<strong>%s</strong>', $child->post_title ) : sprintf( '<a href="%s">%s</a>', get_permalink( $child->ID ), $child->post_title );
 		$markup   .= '</li>';
 		echo $markup;
