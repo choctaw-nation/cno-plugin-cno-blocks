@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.3 - [June 22, 2026]
+
+-   Fixed: Added max-width of `max(500px,80vw)`
+
 ## v1.0.2 - [June 19, 2026]
 
 -   Fixed: Interactivity store properly handles contextual settings from the Modal Trigger block

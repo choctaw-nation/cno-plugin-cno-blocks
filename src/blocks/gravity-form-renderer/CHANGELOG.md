@@ -2,6 +2,10 @@
 
 [View the readme](/src/blocks/gravity-form-renderer/README.md)
 
+## v1.2.3 - [June 22, 2026]
+
+-   Fixed: Name field wraps on mobile
+
 ## v1.2.2 - [June 19, 2026]
 
 -   Fixed: reCAPTCHA text visibility is handled correctly

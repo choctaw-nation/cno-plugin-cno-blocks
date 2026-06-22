@@ -2,7 +2,10 @@
 
 ## v2.4.0 - [June 22, 2026]
 
--   Block Updates: [Tab List](/src/blocks/tab-list/CHANGELOG.md)
+-   Block Updates:
+    -   [Tab List](/src/blocks/tab-list/CHANGELOG.md)
+    -   [Modal](/src/blocks/modal/CHANGELOG.md)
+    -   [Gravity Forms Renderer](/src/blocks/gravity-form-renderer/CHANGELOG.md)
 
 ## v2.3.1 - [June 19, 2026]
 
