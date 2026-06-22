@@ -71,6 +71,7 @@ const { actions, state } = store( 'cno/tabs', {
 		get tabIndexAttribute() {
 			return state.isActiveTab ? 0 : -1;
 		},
+		scrollOffsetTop: 0,
 	} as unknown as Partial< ServerState >,
 	actions: {
 		handleTabKeyDown: withSyncEvent( ( event ) => {
@@ -98,7 +99,7 @@ const { actions, state } = store( 'cno/tabs', {
 		} ),
 		handleTabClick() {
 			const tabIndex = state.tabIndex;
-			actions.setActiveTab( Number( tabIndex ) );
+			actions.setActiveTab( Number( tabIndex ), true );
 		},
 		moveFocus: ( tabIndex ) => {
 			const tabsList = state.tabsList;
@@ -142,7 +143,10 @@ const { actions, state } = store( 'cno/tabs', {
 				const tabElement = document.getElementById( tabId );
 				if ( tabElement ) {
 					setTimeout( () => {
-						tabElement.scrollIntoView( { behavior: 'smooth' } );
+						tabElement.scrollIntoView( {
+							behavior: 'smooth',
+							block: 'start',
+						} );
 					}, 100 );
 				}
 			}
@@ -155,9 +159,16 @@ const { actions, state } = store( 'cno/tabs', {
 			if ( ! tabsList || tabsList.length === 0 ) {
 				return;
 			}
+			const tabsListEl = document.querySelector(
+				'.wp-block-no-tab-list'
+			);
+			if ( tabsListEl ) {
+				state.scrollOffsetTop =
+					tabsListEl.getBoundingClientRect().top + window.scrollY;
+			}
 
 			const { hash } = window.location;
-			const tabId = hash.replace( '#', '' );
+			const tabId = hash.slice( 1 ).trim();
 			const tabIndex = tabsList.findIndex( ( t ) => t.id === tabId );
 			if ( tabIndex >= 0 ) {
 				actions.setActiveTab( tabIndex, true );
