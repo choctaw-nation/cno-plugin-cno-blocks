@@ -2,7 +2,7 @@
 	"name": "choctaw-nation/cno-blocks",
 	"description": "Blocks for Choctaw Nation of Oklahoma website",
 	"type": "project",
-	"version": "2.3.1",
+	"version": "2.4.0",
 	"autoload": {
 		"classmap": [
 			"inc/"

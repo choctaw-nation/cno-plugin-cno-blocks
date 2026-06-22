@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.4.0 - [June 22, 2026]
+
+-   Block Updates: [Tab List](/src/blocks/tab-list/CHANGELOG.md)
+
 ## v2.3.1 - [June 19, 2026]
 
 -   Block Updates:

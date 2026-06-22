@@ -56,7 +56,6 @@
 		"interactivity": true
 	},
 	"editorScript": "file:./index.tsx",
-	"viewScriptModule": "file:./view.ts",
 	"style": "file:./style-index.css",
 	"styles": [
 		{
