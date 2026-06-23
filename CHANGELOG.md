@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.5.0 - [June 23, 2026]
+
+-   Block Updates:
+    -   Tabs' Tab List block now support sticky positioning!
+    -   [Tabs](/src/blocks/tabs/CHANGELOG.md)
+    -   [Tab List](/src/blocks/tab-list/CHANGELOG.md)
+
 ## v2.4.0 - [June 22, 2026]
 
 -   Block Updates:
