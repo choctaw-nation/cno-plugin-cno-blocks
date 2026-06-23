@@ -46,6 +46,7 @@ $tag_processor->set_attribute(
 	)
 );
 $tag_processor->set_attribute( 'data-wp-init', 'callbacks.onTabsInit' );
+$tag_processor->set_attribute( 'data-wp-on-window--resize', 'callbacks.updateScrollOffset' );
 $tag_processor->set_attribute( 'data-wp-on--keydown', 'actions.handleTabKeyDown' );
 
 $output = $tag_processor->get_updated_html();

@@ -23,7 +23,14 @@ type ServerState = {
 		index: number;
 	} >;
 };
-const { actions, state } = store( 'cno/tabs', {
+type State = ServerState & {
+	readonly tabIndex: number | null;
+	readonly isActiveTab: boolean;
+	readonly isActiveTabPanel: boolean;
+	readonly tabIndexAttribute: number;
+	scrollOffsetTop: number;
+};
+const { actions, state, callbacks } = store( 'cno/tabs', {
 	state: {
 		/**
 		 * Context-aware list of tabs for the current tabs block.
@@ -72,7 +79,7 @@ const { actions, state } = store( 'cno/tabs', {
 			return state.isActiveTab ? 0 : -1;
 		},
 		scrollOffsetTop: 0,
-	} as unknown as Partial< ServerState >,
+	} as unknown as State,
 	actions: {
 		handleTabKeyDown: withSyncEvent( ( event ) => {
 			const context = getContext< TabsContext >();
@@ -157,17 +164,7 @@ const { actions, state } = store( 'cno/tabs', {
 			if ( ! tabsList || tabsList.length === 0 ) {
 				return;
 			}
-			const tabsListEl = document.querySelector(
-				'.wp-block-cno-tab-list'
-			);
-			if ( tabsListEl ) {
-				const wpAdminBarHeight =
-					document.getElementById( 'wpadminbar' )?.offsetHeight || 0;
-				state.scrollOffsetTop =
-					tabsListEl.getBoundingClientRect().top +
-					window.scrollY -
-					wpAdminBarHeight;
-			}
+			callbacks.updateScrollOffset();
 
 			const { hash } = window.location;
 			const tabId = hash.slice( 1 ).trim();
@@ -181,6 +178,24 @@ const { actions, state } = store( 'cno/tabs', {
 			const id = attributes[ 'data-tabs-id' ];
 			const index = attributes[ 'data-tab-panel-index' ];
 			return `tab__${ id }-tab-${ index }`;
+		},
+		updateScrollOffset() {
+			const tabsListEl = document.querySelector(
+				'.wp-block-cno-tab-list'
+			);
+
+			if ( ! tabsListEl ) {
+				return;
+			}
+			const wpAdminBarHeight =
+				document.getElementById( 'wpadminbar' )?.offsetHeight || 0;
+			const offset =
+				tabsListEl.getBoundingClientRect().top +
+				window.scrollY -
+				wpAdminBarHeight;
+			if ( state.scrollOffsetTop !== offset ) {
+				state.scrollOffsetTop = offset;
+			}
 		},
 	},
 } );
