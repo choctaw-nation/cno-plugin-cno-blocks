@@ -142,12 +142,10 @@ const { actions, state } = store( 'cno/tabs', {
 				const tabId = tabsList[ newIndex ].id;
 				const tabElement = document.getElementById( tabId );
 				if ( tabElement ) {
-					setTimeout( () => {
-						tabElement.scrollIntoView( {
-							behavior: 'smooth',
-							block: 'start',
-						} );
-					}, 100 );
+					window.scrollTo( {
+						top: state.scrollOffsetTop,
+						behavior: 'smooth',
+					} );
 				}
 			}
 		},
@@ -160,11 +158,15 @@ const { actions, state } = store( 'cno/tabs', {
 				return;
 			}
 			const tabsListEl = document.querySelector(
-				'.wp-block-no-tab-list'
+				'.wp-block-cno-tab-list'
 			);
 			if ( tabsListEl ) {
+				const wpAdminBarHeight =
+					document.getElementById( 'wpadminbar' )?.offsetHeight || 0;
 				state.scrollOffsetTop =
-					tabsListEl.getBoundingClientRect().top + window.scrollY;
+					tabsListEl.getBoundingClientRect().top +
+					window.scrollY -
+					wpAdminBarHeight;
 			}
 
 			const { hash } = window.location;
