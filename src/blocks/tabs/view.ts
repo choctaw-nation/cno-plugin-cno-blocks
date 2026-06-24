@@ -23,7 +23,14 @@ type ServerState = {
 		index: number;
 	} >;
 };
-const { actions, state } = store( 'cno/tabs', {
+type State = ServerState & {
+	readonly tabIndex: number | null;
+	readonly isActiveTab: boolean;
+	readonly isActiveTabPanel: boolean;
+	readonly tabIndexAttribute: number;
+	scrollOffsetTop: number;
+};
+const { actions, state, callbacks } = store( 'cno/tabs', {
 	state: {
 		/**
 		 * Context-aware list of tabs for the current tabs block.
@@ -71,7 +78,8 @@ const { actions, state } = store( 'cno/tabs', {
 		get tabIndexAttribute() {
 			return state.isActiveTab ? 0 : -1;
 		},
-	} as unknown as Partial< ServerState >,
+		scrollOffsetTop: 0,
+	} as unknown as State,
 	actions: {
 		handleTabKeyDown: withSyncEvent( ( event ) => {
 			const context = getContext< TabsContext >();
@@ -98,7 +106,7 @@ const { actions, state } = store( 'cno/tabs', {
 		} ),
 		handleTabClick() {
 			const tabIndex = state.tabIndex;
-			actions.setActiveTab( Number( tabIndex ) );
+			actions.setActiveTab( Number( tabIndex ), true );
 		},
 		moveFocus: ( tabIndex ) => {
 			const tabsList = state.tabsList;
@@ -141,9 +149,10 @@ const { actions, state } = store( 'cno/tabs', {
 				const tabId = tabsList[ newIndex ].id;
 				const tabElement = document.getElementById( tabId );
 				if ( tabElement ) {
-					setTimeout( () => {
-						tabElement.scrollIntoView( { behavior: 'smooth' } );
-					}, 100 );
+					window.scrollTo( {
+						top: state.scrollOffsetTop,
+						behavior: 'smooth',
+					} );
 				}
 			}
 		},
@@ -155,9 +164,10 @@ const { actions, state } = store( 'cno/tabs', {
 			if ( ! tabsList || tabsList.length === 0 ) {
 				return;
 			}
+			callbacks.updateScrollOffset();
 
 			const { hash } = window.location;
-			const tabId = hash.replace( '#', '' );
+			const tabId = hash.slice( 1 ).trim();
 			const tabIndex = tabsList.findIndex( ( t ) => t.id === tabId );
 			if ( tabIndex >= 0 ) {
 				actions.setActiveTab( tabIndex, true );
@@ -168,6 +178,24 @@ const { actions, state } = store( 'cno/tabs', {
 			const id = attributes[ 'data-tabs-id' ];
 			const index = attributes[ 'data-tab-panel-index' ];
 			return `tab__${ id }-tab-${ index }`;
+		},
+		updateScrollOffset() {
+			const tabsListEl = document.querySelector(
+				'.wp-block-cno-tab-list'
+			);
+
+			if ( ! tabsListEl ) {
+				return;
+			}
+			const wpAdminBarHeight =
+				document.getElementById( 'wpadminbar' )?.offsetHeight || 0;
+			const offset =
+				tabsListEl.getBoundingClientRect().top +
+				window.scrollY -
+				wpAdminBarHeight;
+			if ( state.scrollOffsetTop !== offset ) {
+				state.scrollOffsetTop = offset;
+			}
 		},
 	},
 } );

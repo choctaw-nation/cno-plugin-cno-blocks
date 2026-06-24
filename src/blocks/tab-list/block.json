@@ -41,6 +41,9 @@
 			"style": true,
 			"width": true
 		},
+		"position": {
+			"sticky": true
+		},
 		"layout": {
 			"default": {
 				"type": "flex",
