@@ -2,36 +2,54 @@ import { store, getElement, getContext } from '@wordpress/interactivity';
 import { MODAL_STORE } from '@shared/consts';
 import { ModalState, TriggerContext } from '@shared/modal-store-types';
 
-const initialState: ModalState = {
-	isModalOpen: false,
-	modal: null as HTMLDialogElement | null,
-	modalTitle: '',
-	status: null,
-	source: 'innerblocks',
-	allowBodyScrollWhileOpen: false,
-};
-
-const { state, actions } = store( MODAL_STORE, {
-	state: initialState,
+const { state, actions, callbacks } = store( MODAL_STORE, {
+	state: {
+		isModalOpen: false,
+		modal: null as HTMLDialogElement | null,
+		modalTitle: '',
+		status: null,
+		source: 'innerblocks',
+		allowBodyScrollWhileOpen: false,
+		get cnhsaGuidelinesHidden() {
+			if ( state.source !== 'cnhsa-guidelines' ) {
+				return true;
+			}
+			if ( state.isModalOpen ) {
+				return false;
+			}
+			return state.status === 'loading' || state.status === 'error';
+		},
+		get innerBlocksHidden() {
+			if ( state.source !== 'innerblocks' ) {
+				return true;
+			}
+			if ( state.isModalOpen ) {
+				return false;
+			}
+			return state.status === 'loading' || state.status === 'error';
+		},
+	} as ModalState,
 	actions: {
 		/**
 		 * Open the modal in state & with js
 		 */
 		openModal() {
-			state.isModalOpen = true;
 			const {
 				allowBodyScrollWhileOpen,
 				modalTitle,
 				closeWithBackdropClick,
+				source,
 			} = getContext< TriggerContext >();
 			state.allowBodyScrollWhileOpen = allowBodyScrollWhileOpen;
 			state.closeWithBackdropClick = closeWithBackdropClick;
+			state.source = source;
+			state.isModalOpen = true;
 			if ( false === allowBodyScrollWhileOpen ) {
 				document.body.style.overflow = 'hidden';
 			}
 			state.modalTitle = modalTitle;
 			if ( 'cnhsa-guidelines' === state.source ) {
-				// callbacks.fetchCNHSAGuidelines();
+				callbacks.fetchCNHSAGuidelines();
 			}
 		},
 
@@ -96,19 +114,24 @@ const { state, actions } = store( MODAL_STORE, {
 		},
 
 		async fetchCNHSAGuidelines() {
-			state.status = 'loading';
-			state.statusMessage = 'Loading guidelines...';
+			const modalContentDiv = document.getElementById(
+				'cnhsa-guidelines'
+			) as HTMLDivElement;
+			if ( modalContentDiv.innerHTML.trim() !== '' ) {
+				return;
+			}
 			try {
+				state.status = 'loading';
+				state.statusMessage = 'Loading guidelines...';
 				const html = await fetchCNHSAGuidelines();
-				const modalContentDiv = state.modal?.querySelector(
-					'#modal-content'
-				) as HTMLDivElement;
-				state.status = null;
-				state.statusMessage = '';
 				modalContentDiv.innerHTML = html;
 			} catch ( error ) {
+				console.error( 'Error fetching CNHSA Guidelines:', error );
 				state.status = 'error';
 				state.statusMessage = 'Failed to load guidelines. ' + error;
+			} finally {
+				state.status = null;
+				state.statusMessage = '';
 			}
 		},
 	},
@@ -130,19 +153,15 @@ async function fetchCNHSAGuidelines() {
 	if ( expiry && cachedHtml && now < Number( expiry ) ) {
 		return cachedHtml;
 	}
-	try {
-		const response = await fetch(
-			'/wp-json/cno-interactivity/v1/cnhsa-guidelines'
-		);
-		if ( ! response.ok ) {
-			throw new Error( 'Network response was not ok' );
-		}
-		const data = await response.json();
-		localStorage.setItem( storageKey, data.html );
-		// Cache for 1 day
-		localStorage.setItem( expiryKey, ( now + 86400000 ).toString() );
-		return data.html;
-	} catch ( error ) {
-		throw error;
+	const response = await fetch(
+		'/wp-json/cno-interactivity/v1/cnhsa-guidelines'
+	);
+	if ( ! response.ok ) {
+		throw new Error( 'Network response was not ok' );
 	}
+	const data = await response.json();
+	localStorage.setItem( storageKey, data.html );
+	// Cache for 1 day
+	localStorage.setItem( expiryKey, ( now + 86400000 ).toString() );
+	return data.html;
 }

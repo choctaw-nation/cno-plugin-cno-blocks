@@ -6,7 +6,9 @@ export type ModalState = {
 	status: 'loading' | 'error' | null;
 	allowBodyScrollWhileOpen?: boolean;
 	closeWithBackdropClick?: boolean;
-	source: 'gform' | 'cnhsa-guidelines' | 'innerblocks';
+	source: 'cnhsa-guidelines' | 'innerblocks';
+	readonly cnhsaGuidelinesHidden: boolean;
+	readonly innerBlocksHidden: boolean;
 };
 export type TriggerContext = {
 	modalTitle: string;
