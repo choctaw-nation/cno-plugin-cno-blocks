@@ -43,10 +43,14 @@ registerBlockType( metadata.name, {
 						/>
 						<div
 							id="modal-content"
-							data-wp-bind--hidden="state.status"
+							data-wp-bind--hidden="state.innerBlocksHidden"
 						>
 							<InnerBlocks.Content />
 						</div>
+						<div
+							id="cnhsa-guidelines"
+							data-wp-bind--hidden="state.cnhsaGuidelinesHidden"
+						/>
 					</div>
 				</div>
 			</dialog>

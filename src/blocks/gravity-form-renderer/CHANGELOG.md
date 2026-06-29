@@ -2,6 +2,10 @@
 
 [View the readme](/src/blocks/gravity-form-renderer/README.md)
 
+## v1.2.4 - [June 29, 2026]
+
+- Fixed: Form no longer fetches when the it's not being rendered (e.g. the modal state's `source` is not `innerblocks`)
+
 ## v1.2.3 - [June 22, 2026]
 
 -   Fixed: Name field wraps on mobile
