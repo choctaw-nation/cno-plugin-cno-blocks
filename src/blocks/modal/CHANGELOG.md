@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.0 - [June 29, 2026]
+
+- Added: Block fully supports CNHSA Guidelines `fetch`
+
 ## v1.0.3 - [June 22, 2026]
 
 -   Fixed: Added max-width of `max(500px,80vw)`

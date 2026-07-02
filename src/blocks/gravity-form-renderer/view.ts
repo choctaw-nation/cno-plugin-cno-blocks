@@ -169,6 +169,9 @@ const { state, actions } = store( GRAVITY_FORMS_RENDERER_STORE, {
 
 	callbacks: {
 		async loadForm() {
+			if ( modalState.source !== 'innerblocks' ) {
+				return;
+			}
 			const context = getContext< GravityFormsContext >();
 			if ( ! modalState.isModalOpen ) {
 				if ( context.resetOnClose === 'always' ) {
