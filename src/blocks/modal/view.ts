@@ -125,13 +125,11 @@ const { state, actions, callbacks } = store( MODAL_STORE, {
 				state.statusMessage = 'Loading guidelines...';
 				const html = await fetchCNHSAGuidelines();
 				modalContentDiv.innerHTML = html;
-			} catch ( error ) {
-				console.error( 'Error fetching CNHSA Guidelines:', error );
-				state.status = 'error';
-				state.statusMessage = 'Failed to load guidelines. ' + error;
-			} finally {
 				state.status = null;
 				state.statusMessage = '';
+			} catch ( error ) {
+				state.status = 'error';
+				state.statusMessage = 'Failed to load guidelines. ' + error;
 			}
 		},
 	},
