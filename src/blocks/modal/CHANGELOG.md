@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.1 - [July 21, 2026]
+
+- Fixed: CNHSA guidelines are pulled from the CNHSA site.
+
 ## v1.1.0 - [June 29, 2026]
 
 - Added: Block fully supports CNHSA Guidelines `fetch`

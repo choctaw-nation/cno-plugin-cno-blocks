@@ -139,9 +139,9 @@ const { state, actions, callbacks } = store( MODAL_STORE, {
 
 /**
  * Fetch CNHSA Guidelines content and set modal content
- * @return {Promise<string>} The HTML content of the guidelines
+ * @return  The HTML content of the guidelines
  */
-async function fetchCNHSAGuidelines() {
+async function fetchCNHSAGuidelines(): Promise< string > {
 	const storageKey = 'cnhsa-guidelines-html';
 	const expiryKey = 'cnhsa-guidelines-html-expiry';
 	const now = Date.now();
@@ -152,14 +152,14 @@ async function fetchCNHSAGuidelines() {
 		return cachedHtml;
 	}
 	const response = await fetch(
-		'/wp-json/cno-interactivity/v1/cnhsa-guidelines'
+		'https://www.cnhsa.com/wp-json/cnhsa/v1/eligibility-guidelines'
 	);
 	if ( ! response.ok ) {
 		throw new Error( 'Network response was not ok' );
 	}
 	const data = await response.json();
-	localStorage.setItem( storageKey, data.html );
+	localStorage.setItem( storageKey, data.rendered );
 	// Cache for 1 day
 	localStorage.setItem( expiryKey, ( now + 86400000 ).toString() );
-	return data.html;
+	return data.rendered;
 }
