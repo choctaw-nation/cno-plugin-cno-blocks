@@ -1,13 +1,17 @@
 # Changelog
 
+## v2.7.1 - [August 12, 2026]
+
+-   Block Updates:
+    -   [ACF Related Events](/src/blocks/acf-related-events/CHANGELOG.md)
+
 ## v2.6.0 - [June 29, 2026]
 
-- Block Updates:
-  - [Modal Trigger](/src/blocks/modal-trigger/CHANGELOG.md)
-  - [Modal](/src/blocks/modal/CHANGELOG.md)
-  - [Gravity Forms Renderer](/src/blocks/gravity-form-renderer/CHANGELOG.md)
-  - [Tab](/src/blocks/tab/CHANGELOG.md)
-
+-   Block Updates:
+    -   [Modal Trigger](/src/blocks/modal-trigger/CHANGELOG.md)
+    -   [Modal](/src/blocks/modal/CHANGELOG.md)
+    -   [Gravity Forms Renderer](/src/blocks/gravity-form-renderer/CHANGELOG.md)
+    -   [Tab](/src/blocks/tab/CHANGELOG.md)
 
 ## v2.5.0 - [June 23, 2026]
 
