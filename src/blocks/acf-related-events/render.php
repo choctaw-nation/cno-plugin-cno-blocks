@@ -43,6 +43,7 @@ usort(
 		return strtotime( $a['startDate'] ) <=> strtotime( $b['startDate'] );
 	}
 );
+$events_data      = array_filter( $events_data ); // Remove any null values from the array
 $block_attributes = get_block_wrapper_attributes();
 ?>
 <ol <?php echo $block_attributes; ?>>
