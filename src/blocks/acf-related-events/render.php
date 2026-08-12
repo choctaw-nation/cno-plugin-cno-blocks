@@ -37,6 +37,7 @@ $events_data = array_map(
 	},
 	$event_ids
 );
+$events_data = array_filter( $events_data ); // Remove any null values from the array
 usort(
 	$events_data,
 	function ( $a, $b ) {

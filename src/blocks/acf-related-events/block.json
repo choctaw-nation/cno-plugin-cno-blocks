@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"name": "cno/acf-related-events",
 	"title": "ACF Related Events",
+	"version": "1.0.1",
 	"description": "A block for displaying related events set with the ACF field.",
 	"category": "widgets",
 	"supports": {

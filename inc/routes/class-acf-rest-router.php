@@ -139,6 +139,7 @@ class ACF_Rest_Router extends WP_REST_Controller {
 			},
 			$event_ids
 		);
+		$events_data = array_filter( $events_data ); // Remove null values (unpublished events or events without start date)
 		usort(
 			$events_data,
 			function ( $a, $b ) {
